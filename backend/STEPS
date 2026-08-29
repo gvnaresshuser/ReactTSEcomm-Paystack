@@ -1,0 +1,47 @@
+E:\MURALI\REACT-JS-CRASH-COURSE\ReactTSEcomApp\backend\tsconfig.json
+E:\MURALI\REACT-JS-CRASH-COURSE\ReactTSEcomApp\backend\package.json
+
+TypeScript 7.0.2
+        ↓
+NodeNext
+        ↓
+ES Modules
+        ↓
+"type": "module"
+        ↓
+.js extensions for local imports
+        ↓
+tsx watch
+        ↓
+Express
+        ↓
+Neon PostgreSQL
+================================================
+backend
+└── src
+    ├── app.ts
+    ├── server.ts
+    │
+    └── config
+        ├── db.ts
+        └── env.ts
+================================================        
+INSTALL THIS EXTENSION IN VS CODE EDITOR
+TypeScript 7
+Microsoft
+microsoft.com
+612,756
+(13)
+TypeScript and JavaScript language support powered by the native TypeScript language server.
+============================================================
+ctrl + shift + P
+use TypeScript: Select TypeScript Version
+.use TypeScript 7 7.0.2
+
+ctrl + shift + P
+TypeScript: Restart TS server
+
+ctrl + shift + P
+Developer: Reload Window
+
+
