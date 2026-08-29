@@ -10,8 +10,7 @@ export const getAllOrdersAdmin = async () => {
       o.total_amount,
       o.status,
       o.payment_status,
-      o.razorpay_order_id,
-      o.razorpay_payment_id,
+      o.paystack_reference,
       o.created_at,
       o.updated_at
     FROM orders o
@@ -33,8 +32,7 @@ export const getOrderByIdAdmin = async (orderId: string) => {
       o.total_amount,
       o.status,
       o.payment_status,
-      o.razorpay_order_id,
-      o.razorpay_payment_id,
+      o.paystack_reference,
       o.created_at,
       o.updated_at
     FROM orders o

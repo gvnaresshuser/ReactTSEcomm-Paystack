@@ -2,3 +2,603 @@ DEPLOYMENT
 
 github.com
 ReactTSEcomm-Paystack
+
+echo "# ReactTSEcomm-Paystack" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+git push -u origin main
+
+git remote add origin https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+git branch -M main
+git push -u origin main
+
+-----------------------------------------------------------------------------
+git init
+git add .
+git status
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+git push -u origin main
+-----------------------------------------------------------------------------
+
+--------------------------------------------------------------------
+RENDER DASHBOARD - BACKEND
+venkatdada369@gmail.com
+Gvnaressh3695
+New webservice -->Public git repository-->https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+
+VERCEL DASHBOARD - FRONTEND
+https://vercel.com/login
+Google signin
+gvnaressh@gmail.com
+
+
+GITHUB
+https://github.com/
+Username or email address
+gvnaresshuser
+We just sent your authentication code via email to g********@gmail.com. The code will expire at 6:54PM IST.
+
+Device Verification Code
+762357
+--------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+RENDER - BACKEND DEPLOYMENT
+
+Step 1 — Create a Web Service
+
+In Render:
+
+Dashboard → New → Web Service
+
+Connect your GitHub account and select:
+
+ReactTSEcomApp
+Step 2 — Configure the service
+
+Public Git Repository
+https://github.com/gvnaresshuser/ReactTSEcomApp.git
+
+Because your backend is inside the repository's backend folder, use:
+
+Render setting	Value
+Name	ReactTSEcomApp-backend
+Language	Node
+Branch	main
+Root Directory	backend
+Build Command	npm install && npm run build
+Start Command	npm start
+
+The important setting is:
+
+Root Directory: backend
+
+Your local .env might contain things such as:
+
+Environment Variables
+
+PORT=5000
+NODE_ENV=production
+DATABASE_URL=postgresql://neondb_owner:npg_N1GEOvJiwPQ7@ep-divine-waterfall-axk1teq9-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+FRONTEND_URL="http://localhost:5173"
+JWT_SECRET=a958e14b76bff8d73a84e3ca9fcf9d197b6f5c242fae4a1133645cad5e4d6361
+PAYSTACK_KEY_ID=pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
+PAYSTACK_SECRET_KEY=sk_test_52b1ce902424e51128bdbac597e36983faee7969
+
+BACKEND LIVE URL:
+https://reacttsecomm-paystack.onrender.com
+https://reacttsecomm-paystack.onrender.com/api/health
+
+--------------------------------------------------------------------
+CHANGE THIS AFTER DEPLOYING FRONTEND
+FRONTEND_URL=http://localhost:5173
+
+https://react-ts-ecomm-paystack-frontend.vercel.app
+--------------------------------------------------------------------
+
+
+VITE_API_URL
+https://reacttsecomm-paystack.onrender.com
+
+VITE_PAYSTACK_KEY_ID
+pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
+
+
+--------------------------------------------------------------------
+FRONTEND - VERCEL - DEPLOYMENT:
+-------------------------------
+E:\MURALI\REACT-JS-CRASH-COURSE\ReactTSEcomApp\frontend\.env
+VITE_API_URL=https://reacttsecomm-paystack.onrender.com
+VITE_PAYSTACK_KEY_ID=pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
+--------------------------------------------------------------------
+
+
+
+
+https://react-ts-ecomm-paystack-frontend.vercel.app
+
+pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
+sk_test_52b1ce902424e51128bdbac597e36983faee7969
+
+
+
+
+
+🚀 Step 1 — Configure the Vercel project
+
+On the screen you're currently seeing:
+
+Project Name
+
+You currently have:
+
+react-ts-ecomm-paystack-frontend
+
+That's perfectly fine. You can keep it.
+
+Application Preset
+
+Your screenshot currently shows:
+
+Services
+
+Because Vercel has detected multiple services.
+
+Select the frontend application in the tree.
+
+You want:
+
+ReactTSEcomApp
+   └── frontend
+        └── frontend
+             Vite
+
+The important part is that the frontend application is selected, not backend.
+
+Step 2 — Root Directory
+
+Look for:
+
+Root Directory
+
+Set it to:
+
+frontend
+
+This is the most important setting.
+
+It tells Vercel:
+
+Build the application inside ReactTSEcomApp/frontend.
+
+So Vercel will effectively work from:
+
+ReactTSEcomApp/frontend
+
+rather than the repository root.
+
+Step 3 — Framework
+
+Vercel should detect:
+
+Vite
+
+Your screenshot already shows:
+
+Vite
+
+So leave that as:
+
+Framework Preset: Vite
+
+Vite/React applications can be deployed to Vercel with the normal Vite build configuration.
+
+Step 4 — Build settings
+
+If Vercel shows these fields, use:
+
+Build Command
+npm run build
+Output Directory
+dist
+Install Command
+npm install
+
+Usually Vercel can automatically determine these, so if the fields are already correct, don't override them.
+
+Your frontend's flow should be:
+
+npm install
+     ↓
+npm run build
+     ↓
+dist/
+     ↓
+Vercel
+
+Environment Variables
+VITE_API_URL=https://reacttsecomm-paystack.onrender.com
+VITE_PAYSTACK_KEY_ID=pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
+
+
+FRONTEND LIVE URL:
+https://react-ts-ecomm-paystack-frontend.vercel.app/
+
+
+
+
+-----------------------------------------------------------------------------
+Microsoft Windows [Version 10.0.26100.8246]
+(c) Microsoft Corporation. All rights reserved.
+
+E:\Jose\ReactTSEcomm-Paystack>git init
+Initialized empty Git repository in E:/Jose/ReactTSEcomm-Paystack/.git/
+
+E:\Jose\ReactTSEcomm-Paystack>git add .
+warning: in the working copy of 'backend/package-localhost.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/eslint.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/public/icons.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App copy.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/assets/vite.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/index copy.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/main copy.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/main.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tsconfig.app.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/tsconfig.node.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .gitignore
+        new file:   backend/.gitignore
+        new file:   backend/.vscode/settings.json
+        new file:   backend/SCREENS/Checklist for our specific Node.js + Express + TypeScript backend setup.png
+        new file:   backend/STEPS
+        new file:   backend/package-localhost.json
+        new file:   backend/package-lock.json
+        new file:   backend/package.json
+        new file:   backend/src/app.ts
+        new file:   backend/src/config/db.ts
+        new file:   backend/src/config/env.ts
+        new file:   backend/src/config/paystack.ts
+        new file:   backend/src/controllers/adminDashboardController.ts
+        new file:   backend/src/controllers/adminOrderController.ts
+        new file:   backend/src/controllers/adminProductController.ts
+        new file:   backend/src/controllers/authController.ts
+        new file:   backend/src/controllers/cartController.ts
+        new file:   backend/src/controllers/orderController.ts
+        new file:   backend/src/controllers/paymentController.ts
+        new file:   backend/src/controllers/productController.ts
+        new file:   backend/src/middleware/adminMiddleware.ts
+        new file:   backend/src/middleware/authMiddleware.ts
+        new file:   backend/src/models/adminDashboardModel.ts
+        new file:   backend/src/models/adminOrderModel.ts
+        new file:   backend/src/models/adminProductModel.ts
+        new file:   backend/src/models/cartModel.ts
+        new file:   backend/src/models/orderModel copy.ts
+        new file:   backend/src/models/orderModel.ts
+        new file:   backend/src/models/productModel.ts
+        new file:   backend/src/models/userModel.ts
+        new file:   backend/src/routes/adminDashboardRoutes.ts
+        new file:   backend/src/routes/adminOrderRoutes.ts
+        new file:   backend/src/routes/adminProductRoutes.ts
+        new file:   backend/src/routes/authRoutes.ts
+        new file:   backend/src/routes/cartRoutes.ts
+        new file:   backend/src/routes/orderRoutes.ts
+        new file:   backend/src/routes/paymentRoutes.ts
+        new file:   backend/src/routes/productRoutes.ts
+        new file:   backend/src/server.ts
+        new file:   backend/tsconfig.json
+        new file:   frontend/.gitignore
+        new file:   frontend/README.md
+        new file:   frontend/eslint.config.js
+        new file:   frontend/index.html
+        new file:   frontend/package-lock.json
+        new file:   frontend/package.json
+        new file:   frontend/public/favicon.svg
+        new file:   frontend/public/icons.svg
+        new file:   frontend/src/App copy.tsx
+        new file:   frontend/src/App.css
+        new file:   frontend/src/App.tsx
+        new file:   frontend/src/assets/hero.png
+        new file:   frontend/src/assets/react.svg
+        new file:   frontend/src/assets/vite.svg
+        new file:   frontend/src/components/Layout.tsx
+        new file:   frontend/src/components/ModalPortal.tsx
+        new file:   frontend/src/components/Navbar copy.tsx
+        new file:   frontend/src/components/Navbar.tsx
+        new file:   frontend/src/components/ProtectedRoute.tsx
+        new file:   frontend/src/components/RegisterSuccessModal.tsx
+        new file:   frontend/src/index copy.css
+        new file:   frontend/src/index.css
+        new file:   frontend/src/main copy.tsx
+        new file:   frontend/src/main.tsx
+        new file:   frontend/src/pages/Cart.tsx
+        new file:   frontend/src/pages/Checkout.tsx
+        new file:   frontend/src/pages/Home.tsx
+        new file:   frontend/src/pages/Login.css
+        new file:   frontend/src/pages/Login.tsx
+        new file:   frontend/src/pages/OrderDetails.tsx
+        new file:   frontend/src/pages/Orders.tsx
+        new file:   frontend/src/pages/PaymentSuccess.tsx
+        new file:   frontend/src/pages/Products.tsx
+        new file:   frontend/src/pages/Register copy.tsx
+        new file:   frontend/src/pages/Register-WITHOUT-CREATEPORTAL.tsx
+        new file:   frontend/src/pages/Register.tsx
+        new file:   frontend/src/pages/admin/AdminDashboard.tsx
+        new file:   frontend/src/pages/admin/AdminLayout.tsx
+        new file:   frontend/src/pages/admin/AdminOrders.tsx
+        new file:   frontend/src/pages/admin/AdminProductForm.tsx
+        new file:   frontend/src/pages/admin/AdminProducts.tsx
+        new file:   frontend/src/redux/hooks.ts
+        new file:   frontend/src/redux/slices/authSlice.ts
+        new file:   frontend/src/redux/slices/cartSlice.ts
+        new file:   frontend/src/redux/slices/productSlice.ts
+        new file:   frontend/src/redux/store.ts
+        new file:   frontend/src/services/api.ts
+        new file:   frontend/src/types/auth.ts
+        new file:   frontend/src/types/cart.ts
+        new file:   frontend/src/types/paystack-inline-js.d.ts
+        new file:   frontend/src/types/product.ts
+        new file:   frontend/tsconfig.app.json
+        new file:   frontend/tsconfig.json
+        new file:   frontend/tsconfig.node.json
+        new file:   frontend/vercel.json
+        new file:   frontend/vite.config.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        DEPLOYMENT.txt
+
+
+E:\Jose\ReactTSEcomm-Paystack>git add .
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .gitignore
+        new file:   DEPLOYMENT.txt
+        new file:   backend/.gitignore
+        new file:   backend/.vscode/settings.json
+        new file:   backend/SCREENS/Checklist for our specific Node.js + Express + TypeScript backend setup.png
+        new file:   backend/STEPS
+        new file:   backend/package-localhost.json
+        new file:   backend/package-lock.json
+        new file:   backend/package.json
+        new file:   backend/src/app.ts
+        new file:   backend/src/config/db.ts
+        new file:   backend/src/config/env.ts
+        new file:   backend/src/config/paystack.ts
+        new file:   backend/src/controllers/adminDashboardController.ts
+        new file:   backend/src/controllers/adminOrderController.ts
+        new file:   backend/src/controllers/adminProductController.ts
+        new file:   backend/src/controllers/authController.ts
+        new file:   backend/src/controllers/cartController.ts
+        new file:   backend/src/controllers/orderController.ts
+        new file:   backend/src/controllers/paymentController.ts
+        new file:   backend/src/controllers/productController.ts
+        new file:   backend/src/middleware/adminMiddleware.ts
+        new file:   backend/src/middleware/authMiddleware.ts
+        new file:   backend/src/models/adminDashboardModel.ts
+        new file:   backend/src/models/adminOrderModel.ts
+        new file:   backend/src/models/adminProductModel.ts
+        new file:   backend/src/models/cartModel.ts
+        new file:   backend/src/models/orderModel copy.ts
+        new file:   backend/src/models/orderModel.ts
+        new file:   backend/src/models/productModel.ts
+        new file:   backend/src/models/userModel.ts
+        new file:   backend/src/routes/adminDashboardRoutes.ts
+        new file:   backend/src/routes/adminOrderRoutes.ts
+        new file:   backend/src/routes/adminProductRoutes.ts
+        new file:   backend/src/routes/authRoutes.ts
+        new file:   backend/src/routes/cartRoutes.ts
+        new file:   backend/src/routes/orderRoutes.ts
+        new file:   backend/src/routes/paymentRoutes.ts
+        new file:   backend/src/routes/productRoutes.ts
+        new file:   backend/src/server.ts
+        new file:   backend/tsconfig.json
+        new file:   frontend/.gitignore
+        new file:   frontend/README.md
+        new file:   frontend/eslint.config.js
+        new file:   frontend/index.html
+        new file:   frontend/package-lock.json
+        new file:   frontend/package.json
+        new file:   frontend/public/favicon.svg
+        new file:   frontend/public/icons.svg
+        new file:   frontend/src/App copy.tsx
+        new file:   frontend/src/App.css
+        new file:   frontend/src/App.tsx
+        new file:   frontend/src/assets/hero.png
+        new file:   frontend/src/assets/react.svg
+        new file:   frontend/src/assets/vite.svg
+        new file:   frontend/src/components/Layout.tsx
+        new file:   frontend/src/components/ModalPortal.tsx
+        new file:   frontend/src/components/Navbar copy.tsx
+        new file:   frontend/src/components/Navbar.tsx
+        new file:   frontend/src/components/ProtectedRoute.tsx
+        new file:   frontend/src/components/RegisterSuccessModal.tsx
+        new file:   frontend/src/index copy.css
+        new file:   frontend/src/index.css
+        new file:   frontend/src/main copy.tsx
+        new file:   frontend/src/main.tsx
+        new file:   frontend/src/pages/Cart.tsx
+        new file:   frontend/src/pages/Checkout.tsx
+        new file:   frontend/src/pages/Home.tsx
+        new file:   frontend/src/pages/Login.css
+        new file:   frontend/src/pages/Login.tsx
+        new file:   frontend/src/pages/OrderDetails.tsx
+        new file:   frontend/src/pages/Orders.tsx
+        new file:   frontend/src/pages/PaymentSuccess.tsx
+        new file:   frontend/src/pages/Products.tsx
+        new file:   frontend/src/pages/Register copy.tsx
+        new file:   frontend/src/pages/Register-WITHOUT-CREATEPORTAL.tsx
+        new file:   frontend/src/pages/Register.tsx
+        new file:   frontend/src/pages/admin/AdminDashboard.tsx
+        new file:   frontend/src/pages/admin/AdminLayout.tsx
+        new file:   frontend/src/pages/admin/AdminOrders.tsx
+        new file:   frontend/src/pages/admin/AdminProductForm.tsx
+        new file:   frontend/src/pages/admin/AdminProducts.tsx
+        new file:   frontend/src/redux/hooks.ts
+        new file:   frontend/src/redux/slices/authSlice.ts
+        new file:   frontend/src/redux/slices/cartSlice.ts
+        new file:   frontend/src/redux/slices/productSlice.ts
+        new file:   frontend/src/redux/store.ts
+        new file:   frontend/src/services/api.ts
+        new file:   frontend/src/types/auth.ts
+        new file:   frontend/src/types/cart.ts
+        new file:   frontend/src/types/paystack-inline-js.d.ts
+        new file:   frontend/src/types/product.ts
+        new file:   frontend/tsconfig.app.json
+        new file:   frontend/tsconfig.json
+        new file:   frontend/tsconfig.node.json
+        new file:   frontend/vercel.json
+        new file:   frontend/vite.config.ts
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "first commit"
+[master (root-commit) 6417f04] first commit
+ 97 files changed, 19631 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 DEPLOYMENT.txt
+ create mode 100644 backend/.gitignore
+ create mode 100644 backend/.vscode/settings.json
+ create mode 100644 backend/SCREENS/Checklist for our specific Node.js + Express + TypeScript backend setup.png
+ create mode 100644 backend/STEPS
+ create mode 100644 backend/package-localhost.json
+ create mode 100644 backend/package-lock.json
+ create mode 100644 backend/package.json
+ create mode 100644 backend/src/app.ts
+ create mode 100644 backend/src/config/db.ts
+ create mode 100644 backend/src/config/env.ts
+ create mode 100644 backend/src/config/paystack.ts
+ create mode 100644 backend/src/controllers/adminDashboardController.ts
+ create mode 100644 backend/src/controllers/adminOrderController.ts
+ create mode 100644 backend/src/controllers/adminProductController.ts
+ create mode 100644 backend/src/controllers/authController.ts
+ create mode 100644 backend/src/controllers/cartController.ts
+ create mode 100644 backend/src/controllers/orderController.ts
+ create mode 100644 backend/src/controllers/paymentController.ts
+ create mode 100644 backend/src/controllers/productController.ts
+ create mode 100644 backend/src/middleware/adminMiddleware.ts
+ create mode 100644 backend/src/middleware/authMiddleware.ts
+ create mode 100644 backend/src/models/adminDashboardModel.ts
+ create mode 100644 backend/src/models/adminOrderModel.ts
+ create mode 100644 backend/src/models/adminProductModel.ts
+ create mode 100644 backend/src/models/cartModel.ts
+ create mode 100644 backend/src/models/orderModel copy.ts
+ create mode 100644 backend/src/models/orderModel.ts
+ create mode 100644 backend/src/models/productModel.ts
+ create mode 100644 backend/src/models/userModel.ts
+ create mode 100644 backend/src/routes/adminDashboardRoutes.ts
+ create mode 100644 backend/src/routes/adminOrderRoutes.ts
+ create mode 100644 backend/src/routes/adminProductRoutes.ts
+ create mode 100644 backend/src/routes/authRoutes.ts
+ create mode 100644 backend/src/routes/cartRoutes.ts
+ create mode 100644 backend/src/routes/orderRoutes.ts
+ create mode 100644 backend/src/routes/paymentRoutes.ts
+ create mode 100644 backend/src/routes/productRoutes.ts
+ create mode 100644 backend/src/server.ts
+ create mode 100644 backend/tsconfig.json
+ create mode 100644 frontend/.gitignore
+ create mode 100644 frontend/README.md
+ create mode 100644 frontend/eslint.config.js
+ create mode 100644 frontend/index.html
+ create mode 100644 frontend/package-lock.json
+ create mode 100644 frontend/package.json
+ create mode 100644 frontend/public/favicon.svg
+ create mode 100644 frontend/public/icons.svg
+ create mode 100644 frontend/src/App copy.tsx
+ create mode 100644 frontend/src/App.css
+ create mode 100644 frontend/src/App.tsx
+ create mode 100644 frontend/src/assets/hero.png
+ create mode 100644 frontend/src/assets/react.svg
+ create mode 100644 frontend/src/assets/vite.svg
+ create mode 100644 frontend/src/components/Layout.tsx
+ create mode 100644 frontend/src/components/ModalPortal.tsx
+ create mode 100644 frontend/src/components/Navbar copy.tsx
+ create mode 100644 frontend/src/components/Navbar.tsx
+ create mode 100644 frontend/src/components/ProtectedRoute.tsx
+ create mode 100644 frontend/src/components/RegisterSuccessModal.tsx
+ create mode 100644 frontend/src/index copy.css
+ create mode 100644 frontend/src/index.css
+ create mode 100644 frontend/src/main copy.tsx
+ create mode 100644 frontend/src/main.tsx
+ create mode 100644 frontend/src/pages/Cart.tsx
+ create mode 100644 frontend/src/pages/Checkout.tsx
+ create mode 100644 frontend/src/pages/Home.tsx
+ create mode 100644 frontend/src/pages/Login.css
+ create mode 100644 frontend/src/pages/Login.tsx
+ create mode 100644 frontend/src/pages/OrderDetails.tsx
+ create mode 100644 frontend/src/pages/Orders.tsx
+ create mode 100644 frontend/src/pages/PaymentSuccess.tsx
+ create mode 100644 frontend/src/pages/Products.tsx
+ create mode 100644 frontend/src/pages/Register copy.tsx
+ create mode 100644 frontend/src/pages/Register-WITHOUT-CREATEPORTAL.tsx
+ create mode 100644 frontend/src/pages/Register.tsx
+ create mode 100644 frontend/src/pages/admin/AdminDashboard.tsx
+ create mode 100644 frontend/src/pages/admin/AdminLayout.tsx
+ create mode 100644 frontend/src/pages/admin/AdminOrders.tsx
+ create mode 100644 frontend/src/pages/admin/AdminProductForm.tsx
+ create mode 100644 frontend/src/pages/admin/AdminProducts.tsx
+ create mode 100644 frontend/src/redux/hooks.ts
+ create mode 100644 frontend/src/redux/slices/authSlice.ts
+ create mode 100644 frontend/src/redux/slices/cartSlice.ts
+ create mode 100644 frontend/src/redux/slices/productSlice.ts
+ create mode 100644 frontend/src/redux/store.ts
+ create mode 100644 frontend/src/services/api.ts
+ create mode 100644 frontend/src/types/auth.ts
+ create mode 100644 frontend/src/types/cart.ts
+ create mode 100644 frontend/src/types/paystack-inline-js.d.ts
+ create mode 100644 frontend/src/types/product.ts
+ create mode 100644 frontend/tsconfig.app.json
+ create mode 100644 frontend/tsconfig.json
+ create mode 100644 frontend/tsconfig.node.json
+ create mode 100644 frontend/vercel.json
+ create mode 100644 frontend/vite.config.ts
+
+E:\Jose\ReactTSEcomm-Paystack>git branch -M main
+
+E:\Jose\ReactTSEcomm-Paystack>git remote add origin https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+
+E:\Jose\ReactTSEcomm-Paystack>git push -u origin main
+Enumerating objects: 119, done.
+Counting objects: 100% (119/119), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (113/113), done.
+Writing objects: 100% (119/119), 561.10 KiB | 7.58 MiB/s, done.
+Total 119 (delta 20), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (20/20), done.
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+E:\Jose\ReactTSEcomm-Paystack>

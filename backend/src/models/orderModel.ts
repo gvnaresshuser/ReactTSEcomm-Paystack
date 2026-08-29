@@ -536,6 +536,9 @@ export const createPendingOrderFromLocalCart = async (
           // Our local order ID is unique.
           reference: order.id,
 
+         /*  callback_url:
+      "https://react-ts-ecomm-paystack-frontend.vercel.app/payment/callback", */
+
           metadata: {
             userId,
             orderId: order.id,
