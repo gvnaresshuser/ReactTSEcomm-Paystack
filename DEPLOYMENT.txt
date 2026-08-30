@@ -231,17 +231,16 @@ VITE_PAYSTACK_KEY_ID=pk_test_634977593d5b4e8915afbff2b63b8fdc9538d35b
 
 
 FRONTEND LIVE URL:
-https://react-ts-ecomm-paystack-frontend.vercel.app/
+https://react-ts-ecomm-paystack-frontend.vercel.app
 
-
+BACKEND LIVE URL:
+https://reacttsecomm-paystack.onrender.com
 
 
 
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-Microsoft Windows [Version 10.0.26100.8246]
-(c) Microsoft Corporation. All rights reserved.
 
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
@@ -252,44 +251,25 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        new file:   ReactTSEcomm-Paystack-29-08-2026.zip
-        new file:   ReactTSEcomm-Paystack-30-08-2026.zip
-        new file:   backend.zip
-        modified:   backend/src/middleware/authMiddleware.ts
-        new file:   frontend.zip
-        deleted:    frontend/src/components/Navbar copy.tsx
-        modified:   frontend/src/components/Navbar.tsx
-        new file:   frontend/src/pages/Orders-with-search.tsx
-        new file:   frontend/src/pages/Orders-without-search.tsx
-        modified:   frontend/src/pages/Orders.tsx
-        modified:   frontend/src/pages/admin/AdminDashboard.tsx
-        modified:   frontend/src/pages/admin/AdminLayout.tsx
+        new file:   frontend/src/pages/admin/AdminOrders copy.tsx
         modified:   frontend/src/pages/admin/AdminOrders.tsx
-        modified:   frontend/src/pages/admin/AdminProductForm.tsx
-        modified:   frontend/src/pages/admin/AdminProducts.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "frontend with search"
-[main 75c720c] frontend with search
- 16 files changed, 2633 insertions(+), 905 deletions(-)
- create mode 100644 ReactTSEcomm-Paystack-29-08-2026.zip
- create mode 100644 ReactTSEcomm-Paystack-30-08-2026.zip
- create mode 100644 backend.zip
- create mode 100644 frontend.zip
- delete mode 100644 frontend/src/components/Navbar copy.tsx
- create mode 100644 frontend/src/pages/Orders-with-search.tsx
- create mode 100644 frontend/src/pages/Orders-without-search.tsx
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "frontend with search admin orders"
+[main 43ec1a9] frontend with search admin orders
+ 3 files changed, 643 insertions(+), 88 deletions(-)
+ create mode 100644 frontend/src/pages/admin/AdminOrders copy.tsx
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 40, done.
-Counting objects: 100% (40/40), done.
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (23/23), done.
-Writing objects: 100% (23/23), 2.42 MiB | 1.03 MiB/s, done.
-Total 23 (delta 13), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (13/13), completed with 9 local objects.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 2.76 KiB | 942.00 KiB/s, done.
+Total 8 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   6951629..75c720c  main -> main
+   75c720c..43ec1a9  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
