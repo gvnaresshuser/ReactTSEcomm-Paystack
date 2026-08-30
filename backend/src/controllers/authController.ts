@@ -172,7 +172,7 @@ export const login = async (
 
         // Store JWT in cookie
 
-        res.cookie(
+       /*  res.cookie(
             "token",
             token,
             {
@@ -189,13 +189,27 @@ export const login = async (
                     24 * 60 * 60 * 1000,
                 path: "/"
             }
-        );
+        ); */
+        //------------------- changed for iphone support --------------------------
+        res.cookie(
+    "token",
+    token,
+    {
+        httpOnly: true,
+        secure: env.nodeEnv === "production",
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000,
+        path: "/"
+    }
+);
+        //------------------- changed for iphone support --------------------------
+
 
         return res.status(200).json({
             success: true,
             message:
                 "Login successful",
-                token, // 👈 DEMO ONLY
+                //token, // 👈 DEMO ONLY
             user: {
                 id: user.id,
                 name: user.name,
@@ -291,12 +305,20 @@ export const logout = async (
     res: Response
 ) => {
     try {
-        res.clearCookie("token", {
+        /* res.clearCookie("token", {
             httpOnly: true,
             secure: env.nodeEnv === "production",
             sameSite: env.nodeEnv === "production" ? "none" : "lax",
             path: "/"
+        }); */
+        //---------------- changed for iphone support --------------------------
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: env.nodeEnv === "production",
+            sameSite: "lax",
+            path: "/"
         });
+        //---------------- changed for iphone support --------------------------
 
         return res.status(200).json({
             success: true,

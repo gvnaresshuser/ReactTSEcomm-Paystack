@@ -1,0 +1,120 @@
+Your computer works, but your friend's doesn't, which makes cookie configuration / cross-origin behavior the prime suspect.
+
+Safari on iPhone.
+
+
+FRONTEND LIVE URL:
+https://react-ts-ecomm-paystack-frontend.vercel.app
+
+BACKEND LIVE URL:
+https://reacttsecomm-paystack.onrender.com
+
+
+Since your iPhone gives the same result in Safari and Chrome, this is not simply "Safari is broken." However, on iPhone, Chrome also uses Apple's WebKit engine, so both browsers are subject to the same underlying WebKit cookie policies. WebKit states that third-party cookies are blocked by default on iOS/iPadOS.
+
+And your architecture is exactly the problematic case:
+
+Frontend
+react-ts-ecomm-paystack-frontend.vercel.app
+             ↓
+             ↓ cross-site API request
+             ↓
+Backend
+reacttsecomm-paystack.onrender.com
+
+
+SOLUTION:
+=========
+Instead, use Vercel as a proxy
+
+We can make the browser think it's talking to one site:
+
+iPhone
+   ↓
+https://react-ts-ecomm-paystack-frontend.vercel.app/api/...
+   ↓
+Vercel proxy
+   ↓
+https://reacttsecomm-paystack.onrender.com/api/...
+
+Now the browser's request is going to:
+
+react-ts-ecomm-paystack-frontend.vercel.app
+
+which is the same site as the page itself.
+
+The authentication cookie can then be a first-party cookie.
+=========================================================================
+Yes — exactly, but with one important clarification. 👍
+
+Your vercel.json is a configuration file inside your frontend Vercel project. It does not need to know the frontend URL.
+
+This part:
+
+{
+  "source": "/api/:path*",
+  "destination": "https://reacttsecomm-paystack.onrender.com/api/:path*"
+}
+
+means:
+
+Browser requests:
+https://react-ts-ecomm-paystack-frontend.vercel.app/api/admin/dashboard
+                                      ↓
+                              Vercel sees /api/...
+                                      ↓
+                              rewrites internally to:
+https://reacttsecomm-paystack.onrender.com/api/admin/dashboard
+
+So yes, Vercel automatically knows that the incoming request is to:
+
+https://react-ts-ecomm-paystack-frontend.vercel.app
+
+because vercel.json belongs to that deployed frontend project.
+
+You do NOT put this in vercel.json:
+https://react-ts-ecomm-paystack-frontend.vercel.app
+
+You only specify the backend destination:
+
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://reacttsecomm-paystack.onrender.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+Then api.ts uses:
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: import.meta.env.DEV
+        ? "http://localhost:5000"
+        : "",
+    withCredentials: true
+});
+
+export default api;
+
+So in production:
+
+api.get("/api/admin/dashboard")
+
+becomes:
+
+https://react-ts-ecomm-paystack-frontend.vercel.app/api/admin/dashboard
+
+and Vercel proxies it to:
+
+https://reacttsecomm-paystack.onrender.com/api/admin/dashboard
+
+That's exactly what we want. ✅
+
+One correction to my earlier explanation: the browser sees the request as same-origin with the Vercel frontend, but the Vercel server then makes the backend request. This is why the proxy can avoid the browser's direct cross-site cookie problem.
+
+You're ready to make the three coordinated changes: vercel.json + api.ts + sameSite: "lax" in login/logout.
