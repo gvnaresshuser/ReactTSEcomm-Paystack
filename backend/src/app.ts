@@ -14,14 +14,14 @@ import adminDashboardRoutes from "./routes/adminDashboardRoutes.js";
 const app = express();
 
 //--------------------
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
     console.log(
         "REQUEST:",
         req.method,
         req.originalUrl
     );
     next();
-});
+}); */
 //--------------------
 
 // JSON request body

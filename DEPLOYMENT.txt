@@ -242,6 +242,7 @@ https://reacttsecomm-paystack.onrender.com
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
+
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
 E:\Jose\ReactTSEcomm-Paystack>git status
@@ -250,31 +251,25 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-        new file:   IPHONE-PROBLEM-IN-VIEWING-WEBSITE.txt
-        modified:   backend/src/controllers/authController.ts
-        new file:   frontend/src/services/api copy.ts
-        modified:   frontend/src/services/api.ts
-        new file:   frontend/vercel copy.json
-        modified:   frontend/vercel.json
+        modified:   DEPLOYMENT.txt
+        modified:   frontend/src/pages/Login.tsx
+        modified:   frontend/src/redux/slices/authSlice.ts
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "Fix production authentication proxy"
-[main 389ba2d] Fix production authentication proxy
- 6 files changed, 171 insertions(+), 7 deletions(-)
- create mode 100644 IPHONE-PROBLEM-IN-VIEWING-WEBSITE.txt
- create mode 100644 frontend/src/services/api copy.ts
- create mode 100644 frontend/vercel copy.json
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "logging in...spinner solved"
+[main 39bf4a6] logging in...spinner solved
+ 3 files changed, 34 insertions(+), 22 deletions(-)
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 22, done.
-Counting objects: 100% (22/22), done.
+Enumerating objects: 19, done.
+Counting objects: 100% (19/19), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (12/12), done.
-Writing objects: 100% (12/12), 2.33 KiB | 2.33 MiB/s, done.
-Total 12 (delta 9), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (9/9), completed with 7 local objects.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (10/10), 1.33 KiB | 339.00 KiB/s, done.
+Total 10 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   87aad28..389ba2d  main -> main
+   389ba2d..39bf4a6  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 
