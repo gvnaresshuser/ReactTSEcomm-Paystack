@@ -266,7 +266,7 @@ const Navbar = () => {
 
               <button
                 type="button"
-                onClick={() => setJwtPanelOpen(true)}
+                /* onClick={() => setJwtPanelOpen(true)} */
                 title="Click to inspect JWT token"
                 className="ml-2 flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-left transition-all duration-200 hover:border-purple-500 hover:bg-slate-800 hover:shadow-lg hover:shadow-purple-500/10"
               >

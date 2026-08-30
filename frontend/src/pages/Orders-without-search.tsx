@@ -10,7 +10,6 @@ import {
   CircleCheck,
   Clock3,
   XCircle,
-  Search,
 } from "lucide-react";
 import api from "../services/api";
 
@@ -30,20 +29,10 @@ const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Search and date/time filters
-  const [search, setSearch] = useState("");
-  const [fromDateTime, setFromDateTime] = useState("");
-  const [toDateTime, setToDateTime] = useState("");
-
-  // ========================================
-  // FETCH ORDERS
-  // ========================================
-
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await api.get("/api/orders");
-
         setOrders(response.data.orders);
       } catch (error: any) {
         setError(error.response?.data?.message || "Failed to fetch orders");
@@ -55,116 +44,20 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  // ========================================
-  // CONVERT datetime-local TO TIMESTAMP
-  // ========================================
-  //
-  // datetime-local does NOT contain timezone information.
-  //
-  // Example:
-  // "2026-08-29T19:30"
-  //
-  // We explicitly interpret it as the user's local time.
-  // ========================================
-
-  const getLocalDateTimeTimestamp = (value: string) => {
-    if (!value) return null;
-
-    const [datePart, timePart] = value.split("T");
-
-    if (!datePart || !timePart) return null;
-
-    const [year, month, day] = datePart.split("-").map(Number);
-    const [hour, minute] = timePart.split(":").map(Number);
-
-    return new Date(year, month - 1, day, hour, minute, 0, 0).getTime();
-  };
-
-  // ========================================
-  // FILTER ORDERS
-  // ========================================
-
-  const filteredOrders = orders.filter((order) => {
-    const searchText = search.toLowerCase().trim();
-
-    // ----------------------------------------
-    // TEXT SEARCH
-    // ----------------------------------------
-
-    const matchesSearch =
-      !searchText ||
-      order.id.toLowerCase().includes(searchText) ||
-      order.status.toLowerCase().includes(searchText) ||
-      order.payment_status.toLowerCase().includes(searchText);
-
-    // ----------------------------------------
-    // ORDER DATE
-    // ----------------------------------------
-
-    // Backend example:
-    // 2026-08-29T10:22:51.721Z
-    //
-    // new Date() correctly converts this UTC
-    // timestamp into the equivalent instant.
-
-    const orderTimestamp = new Date(order.created_at).getTime();
-
-    // ----------------------------------------
-    // FROM DATE & TIME
-    // ----------------------------------------
-
-    const fromTimestamp = getLocalDateTimeTimestamp(fromDateTime);
-
-    const matchesFromDate =
-      fromTimestamp === null || orderTimestamp >= fromTimestamp;
-
-    // ----------------------------------------
-    // TO DATE & TIME
-    // ----------------------------------------
-
-    let toTimestamp = getLocalDateTimeTimestamp(toDateTime);
-
-    // Include the entire selected minute.
-    //
-    // Example:
-    // 07:30 PM
-    //
-    // includes:
-    // 07:30:00
-    // through
-    // 07:30:59.999
-
-    if (toTimestamp !== null) {
-      toTimestamp += 59_999;
-    }
-
-    const matchesToDate = toTimestamp === null || orderTimestamp <= toTimestamp;
-
-    return matchesSearch && matchesFromDate && matchesToDate;
-  });
-
-  // ========================================
-  // CLEAR FILTERS
-  // ========================================
-
-  const clearFilters = () => {
-    setSearch("");
-    setFromDateTime("");
-    setToDateTime("");
-  };
-
-  // ========================================
+  // ----------------------------------------
   // LOADING
-  // ========================================
-
+  // ----------------------------------------
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-purple-50 px-4">
         <div className="w-full max-w-sm">
           <div className="rounded-3xl bg-white/80 p-10 text-center shadow-2xl backdrop-blur-sm">
+            {/* LOADING ICON */}
             <div className="relative mx-auto flex h-24 w-24 items-center justify-center">
+              {/* Outer glow */}
               <div className="absolute inset-0 animate-pulse rounded-full bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 blur-xl" />
 
+              {/* Icon container */}
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 shadow-inner">
                 <LoaderCircle
                   size={42}
@@ -174,20 +67,24 @@ const Orders = () => {
               </div>
             </div>
 
+            {/* HEADING */}
             <h2 className="mt-7 text-xl font-bold text-slate-800">
               Loading Your Orders
             </h2>
 
+            {/* MESSAGE */}
             <p className="mt-2 text-sm text-slate-500">
               We're fetching your order history
             </p>
 
+            {/* ANIMATED DOTS */}
             <div className="mt-5 flex justify-center gap-1.5">
               <span className="h-2 w-2 animate-bounce rounded-full bg-blue-500 [animation-delay:-0.3s]" />
               <span className="h-2 w-2 animate-bounce rounded-full bg-purple-500 [animation-delay:-0.15s]" />
               <span className="h-2 w-2 animate-bounce rounded-full bg-pink-500" />
             </div>
 
+            {/* SMALL FOOTER */}
             <p className="mt-6 text-xs font-medium text-slate-400">
               Please wait a moment...
             </p>
@@ -197,10 +94,9 @@ const Orders = () => {
     );
   }
 
-  // ========================================
+  // ----------------------------------------
   // ERROR
-  // ========================================
-
+  // ----------------------------------------
   if (error) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-slate-100 via-red-50 to-orange-50 px-4 py-10 sm:px-6 lg:px-8">
@@ -225,27 +121,25 @@ const Orders = () => {
     );
   }
 
-  // ========================================
-  // MAIN
-  // ========================================
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-purple-50 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        {/* ========================================
+        {/* =========================================
             PAGE HEADER
-        ======================================== */}
-
-        <div className="mb-6">
+        ========================================= */}
+        <div className="mb-8">
           <div className="flex flex-wrap items-center gap-3">
+            {/* ICON */}
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 shadow-lg">
               <Package size={25} className="text-white" />
             </div>
 
+            {/* TITLE */}
             <h1 className="text-3xl font-bold text-slate-800 sm:text-4xl">
               My Orders
             </h1>
 
+            {/* COUNT BADGE */}
             <span className="relative -bottom-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1 text-sm font-bold text-white shadow-md">
               {orders.length}
             </span>
@@ -256,101 +150,12 @@ const Orders = () => {
           </p>
         </div>
 
-        {/* ========================================
-            SEARCH + DATE/TIME FILTER
-        ======================================== */}
-
-        {orders.length > 0 && (
-          <div className="mb-5 rounded-2xl bg-white p-4 shadow-md sm:p-5">
-            <div className="grid gap-3 md:grid-cols-3">
-              {/* SEARCH */}
-
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                  Search Orders
-                </label>
-
-                <div className="relative">
-                  <Search
-                    size={18}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search order, status..."
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                  />
-                </div>
-              </div>
-
-              {/* FROM DATE & TIME */}
-
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                  From Date & Time
-                </label>
-
-                <input
-                  type="datetime-local"
-                  value={fromDateTime}
-                  onChange={(e) => setFromDateTime(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                />
-              </div>
-
-              {/* TO DATE & TIME */}
-
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-600">
-                  To Date & Time
-                </label>
-
-                <input
-                  type="datetime-local"
-                  value={toDateTime}
-                  onChange={(e) => setToDateTime(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-                />
-              </div>
-            </div>
-
-            {/* RESULTS + CLEAR */}
-
-            <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-medium text-slate-600">
-                Showing{" "}
-                <span className="font-bold text-blue-600">
-                  {filteredOrders.length}
-                </span>{" "}
-                of{" "}
-                <span className="font-bold text-slate-800">
-                  {orders.length}
-                </span>{" "}
-                orders
-              </p>
-
-              {(search || fromDateTime || toDateTime) && (
-                <button
-                  type="button"
-                  onClick={clearFilters}
-                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
-                >
-                  Clear Filters
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* ========================================
-            NO ORDERS
-        ======================================== */}
-
+        {/* =========================================
+            EMPTY ORDERS
+        ========================================= */}
         {orders.length === 0 ? (
           <div className="rounded-3xl bg-white p-8 text-center shadow-xl sm:p-12">
+            {/* ICON */}
             <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 shadow-inner">
               <ShoppingBag
                 size={48}
@@ -359,15 +164,18 @@ const Orders = () => {
               />
             </div>
 
+            {/* HEADING */}
             <h2 className="mt-7 text-3xl font-bold text-slate-800 sm:text-4xl">
               No Orders Yet
             </h2>
 
+            {/* MESSAGE */}
             <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-500 sm:text-base">
               You haven't placed any orders yet. Explore our products and
               discover something you'll love!
             </p>
 
+            {/* BUTTON */}
             <Link
               to="/products"
               className="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:shadow-xl"
@@ -381,55 +189,25 @@ const Orders = () => {
               Your orders will appear here after checkout.
             </p>
           </div>
-        ) : filteredOrders.length === 0 ? (
-          /* ========================================
-              NO SEARCH RESULTS
-          ======================================== */
-
-          <div className="rounded-3xl bg-white p-8 text-center shadow-xl sm:p-12">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
-              <Search size={38} className="text-slate-400" />
-            </div>
-
-            <h2 className="mt-6 text-2xl font-bold text-slate-800">
-              No Matching Orders
-            </h2>
-
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-              We couldn't find any orders matching your search or selected date
-              and time.
-            </p>
-
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:scale-[1.02] hover:shadow-lg"
-            >
-              <XCircle size={18} />
-              Clear Filters
-            </button>
-          </div>
         ) : (
-          /* ========================================
-              FILTERED ORDERS
-          ======================================== */
-
+          /* =========================================
+              ORDERS LIST
+          ========================================= */
           <div className="space-y-5">
-            {filteredOrders.map((order) => (
+            {orders.map((order) => (
               <article
                 key={order.id}
                 className="group overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                {/* TOP GRADIENT */}
-
+                {/* TOP GRADIENT BAR */}
                 <div className="h-1.5 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500" />
 
                 <div className="p-5 sm:p-6">
-                  {/* ORDER HEADER */}
-
+                  {/* =================================
+                      ORDER HEADER
+                  ================================= */}
                   <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                     {/* ORDER ID */}
-
                     <div className="flex min-w-0 items-start gap-3">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50">
                         <Package size={21} className="text-blue-600" />
@@ -447,7 +225,6 @@ const Orders = () => {
                     </div>
 
                     {/* DATE */}
-
                     <div className="flex items-center gap-2 text-left sm:text-right">
                       <CalendarDays
                         size={18}
@@ -472,11 +249,11 @@ const Orders = () => {
                     </div>
                   </div>
 
-                  {/* ORDER INFORMATION */}
-
+                  {/* =================================
+                      ORDER INFORMATION
+                  ================================= */}
                   <div className="mt-6 grid gap-4 border-t border-slate-100 pt-5 sm:grid-cols-3">
                     {/* TOTAL */}
-
                     <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
                       <div className="flex items-center gap-2">
                         <CreditCard size={18} className="text-blue-600" />
@@ -492,7 +269,6 @@ const Orders = () => {
                     </div>
 
                     {/* ORDER STATUS */}
-
                     <div className="rounded-xl bg-slate-50 p-4">
                       <p className="text-sm font-medium text-slate-500">
                         Order Status
@@ -514,7 +290,6 @@ const Orders = () => {
                     </div>
 
                     {/* PAYMENT STATUS */}
-
                     <div className="rounded-xl bg-slate-50 p-4">
                       <p className="text-sm font-medium text-slate-500">
                         Payment Status
@@ -536,8 +311,9 @@ const Orders = () => {
                     </div>
                   </div>
 
-                  {/* FOOTER */}
-
+                  {/* =================================
+                      FOOTER
+                  ================================= */}
                   <div className="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-xs text-slate-400">
                       Order placed successfully

@@ -236,6 +236,63 @@ https://react-ts-ecomm-paystack-frontend.vercel.app/
 
 
 
+
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+E:\Jose\ReactTSEcomm-Paystack>git add .
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   DEPLOYMENT.txt
+        modified:   backend/src/models/adminOrderModel.ts
+        modified:   backend/src/models/orderModel.ts
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "Admin orders rectified"
+[main 6951629] Admin orders rectified
+ 3 files changed, 606 insertions(+), 5 deletions(-)
+
+E:\Jose\ReactTSEcomm-Paystack>git push
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 4.44 KiB | 1.48 MiB/s, done.
+Total 8 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+   6417f04..6951629  main -> main
+
+E:\Jose\ReactTSEcomm-Paystack>
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -----------------------------------------------------------------------------
 Microsoft Windows [Version 10.0.26100.8246]
 (c) Microsoft Corporation. All rights reserved.
