@@ -240,6 +240,9 @@ https://react-ts-ecomm-paystack-frontend.vercel.app/
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+Microsoft Windows [Version 10.0.26100.8246]
+(c) Microsoft Corporation. All rights reserved.
+
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
 E:\Jose\ReactTSEcomm-Paystack>git status
@@ -249,27 +252,60 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        modified:   backend/src/models/adminOrderModel.ts
-        modified:   backend/src/models/orderModel.ts
+        new file:   ReactTSEcomm-Paystack-29-08-2026.zip
+        new file:   ReactTSEcomm-Paystack-30-08-2026.zip
+        new file:   backend.zip
+        modified:   backend/src/middleware/authMiddleware.ts
+        new file:   frontend.zip
+        deleted:    frontend/src/components/Navbar copy.tsx
+        modified:   frontend/src/components/Navbar.tsx
+        new file:   frontend/src/pages/Orders-with-search.tsx
+        new file:   frontend/src/pages/Orders-without-search.tsx
+        modified:   frontend/src/pages/Orders.tsx
+        modified:   frontend/src/pages/admin/AdminDashboard.tsx
+        modified:   frontend/src/pages/admin/AdminLayout.tsx
+        modified:   frontend/src/pages/admin/AdminOrders.tsx
+        modified:   frontend/src/pages/admin/AdminProductForm.tsx
+        modified:   frontend/src/pages/admin/AdminProducts.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "Admin orders rectified"
-[main 6951629] Admin orders rectified
- 3 files changed, 606 insertions(+), 5 deletions(-)
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "frontend with search"
+[main 75c720c] frontend with search
+ 16 files changed, 2633 insertions(+), 905 deletions(-)
+ create mode 100644 ReactTSEcomm-Paystack-29-08-2026.zip
+ create mode 100644 ReactTSEcomm-Paystack-30-08-2026.zip
+ create mode 100644 backend.zip
+ create mode 100644 frontend.zip
+ delete mode 100644 frontend/src/components/Navbar copy.tsx
+ create mode 100644 frontend/src/pages/Orders-with-search.tsx
+ create mode 100644 frontend/src/pages/Orders-without-search.tsx
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 15, done.
-Counting objects: 100% (15/15), done.
+Enumerating objects: 40, done.
+Counting objects: 100% (40/40), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (8/8), done.
-Writing objects: 100% (8/8), 4.44 KiB | 1.48 MiB/s, done.
-Total 8 (delta 5), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+Compressing objects: 100% (23/23), done.
+Writing objects: 100% (23/23), 2.42 MiB | 1.03 MiB/s, done.
+Total 23 (delta 13), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (13/13), completed with 9 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   6417f04..6951629  main -> main
+   6951629..75c720c  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+npx tsc --noEmit is a TypeScript type-checking command.
+
+Breaking it down
+npx tsc --noEmit
+npx → Runs a package from your project's node_modules.
+tsc → TypeScript Compiler.
+--noEmit → Tells TypeScript not to generate any JavaScript files.
+
+So, in simple words:
+
+"Check my TypeScript project for errors, but don't create or modify any output files."
 
 
 

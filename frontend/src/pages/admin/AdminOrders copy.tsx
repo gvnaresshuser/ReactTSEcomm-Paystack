@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { LoaderCircle, Search, Calendar, X } from "lucide-react";
+import { LoaderCircle, Search } from "lucide-react";
 
 interface Order {
   id: string;
@@ -48,16 +48,13 @@ const getPaymentStyle = (status: string) => {
 const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Search + Date/Time filters
   const [search, setSearch] = useState("");
-  const [fromDateTime, setFromDateTime] = useState("");
-  const [toDateTime, setToDateTime] = useState("");
 
   const fetchOrders = async () => {
     try {
       const response = await api.get("/api/admin/orders");
       setOrders(response.data.orders);
+      console.log(response.data.orders);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
     } finally {
@@ -78,55 +75,33 @@ const AdminOrders = () => {
     }
   };
 
-  // FILTER ORDERS
+  /* SEARCH */
   const filteredOrders = orders.filter((order) => {
     const searchText = search.toLowerCase().trim();
 
-    // -------------------------
-    // TEXT SEARCH
-    // -------------------------
-    const matchesSearch =
-      !searchText ||
+    if (!searchText) return true;
+
+    return (
       order.user_name.toLowerCase().includes(searchText) ||
       order.user_email.toLowerCase().includes(searchText) ||
       order.id.toLowerCase().includes(searchText) ||
       order.status.toLowerCase().includes(searchText) ||
-      order.payment_status.toLowerCase().includes(searchText);
-
-    // -------------------------
-    // DATE + TIME SEARCH
-    // -------------------------
-    const orderTime = new Date(order.created_at).getTime();
-
-    const fromTime = fromDateTime ? new Date(fromDateTime).getTime() : null;
-
-    const toTime = toDateTime ? new Date(toDateTime).getTime() : null;
-
-    const matchesFromDate = fromTime === null || orderTime >= fromTime;
-
-    const matchesToDate = toTime === null || orderTime <= toTime;
-
-    return matchesSearch && matchesFromDate && matchesToDate;
+      order.payment_status.toLowerCase().includes(searchText)
+    );
   });
 
-  const hasFilters =
-    search.trim() !== "" || fromDateTime !== "" || toDateTime !== "";
-
-  const clearFilters = () => {
-    setSearch("");
-    setFromDateTime("");
-    setToDateTime("");
-  };
-
-  // LOADING
+  /* LOADING */
   if (loading) {
     return (
       <div className="flex min-h-[calc(100vh-2rem)] w-full items-center justify-center px-4 sm:min-h-[calc(100vh-3rem)]">
         <div className="w-full max-w-sm">
           <div className="rounded-3xl bg-white/80 p-10 text-center shadow-2xl backdrop-blur-sm">
+            {/* ANIMATED LOADING ICON */}
             <div className="relative mx-auto flex h-24 w-24 items-center justify-center">
+              {/* Animated Glow */}
               <div className="absolute inset-0 animate-pulse rounded-full bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 blur-xl" />
 
+              {/* Icon Container */}
               <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 shadow-inner">
                 <LoaderCircle
                   size={42}
@@ -136,20 +111,24 @@ const AdminOrders = () => {
               </div>
             </div>
 
+            {/* HEADING */}
             <h2 className="mt-7 text-xl font-bold text-slate-800">
               Loading Orders
             </h2>
 
+            {/* MESSAGE */}
             <p className="mt-2 text-sm leading-6 text-slate-500">
               We're fetching the latest orders for you
             </p>
 
+            {/* ANIMATED DOTS */}
             <div className="mt-5 flex justify-center gap-1.5">
               <span className="h-2 w-2 animate-bounce rounded-full bg-blue-500 [animation-delay:-0.3s]" />
               <span className="h-2 w-2 animate-bounce rounded-full bg-purple-500 [animation-delay:-0.15s]" />
               <span className="h-2 w-2 animate-bounce rounded-full bg-pink-500" />
             </div>
 
+            {/* FOOTER */}
             <p className="mt-6 text-xs font-medium text-slate-400">
               Almost there...
             </p>
@@ -162,143 +141,60 @@ const AdminOrders = () => {
   return (
     <div className="w-full">
       <div className="mx-auto max-w-7xl">
-        {/* HEADER */}
-        <div className="mb-5">
-          <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">
-            Admin Orders
-          </h1>
+        {/* HEADER + SEARCH */}
+        <div className="mb-5 flex flex-col gap-4 sm:mb-6 lg:flex-row lg:items-center lg:justify-between">
+          {/* TITLE */}
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">
+              Admin Orders
+            </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
-            Manage and track customer orders
-          </p>
+            <p className="mt-1 text-sm text-slate-500">
+              Manage and track customer orders
+            </p>
+          </div>
+
+          {/* SEARCH */}
+          <div className="relative w-full lg:max-w-md">
+            <Search
+              size={20}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            />
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name, email, status, payment or order ID..."
+              className="
+                w-full rounded-xl border border-slate-200 bg-white
+                py-3 pl-10 pr-4 text-sm text-slate-700
+                shadow-sm outline-none transition
+                placeholder:text-slate-400
+                focus:border-blue-400 focus:ring-2 focus:ring-blue-100
+              "
+            />
+          </div>
         </div>
 
-        {/* SEARCH / DATE FILTER PANEL */}
-        <div className="mb-5 rounded-2xl bg-white p-4 shadow-md sm:p-5">
-          <div className="grid gap-4 lg:grid-cols-3">
-            {/* SEARCH */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Search Orders
-              </label>
+        {/* RESULT COUNT */}
+        <div className="mb-4 flex items-center justify-between">
+          <p className="text-sm text-slate-500">
+            Showing{" "}
+            <span className="font-semibold text-slate-700">
+              {filteredOrders.length}
+            </span>{" "}
+            {filteredOrders.length === 1 ? "order" : "orders"}
+          </p>
 
-              <div className="relative">
-                <Search
-                  size={19}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                />
-
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search name, email, status..."
-                  className="
-                    w-full rounded-xl border border-slate-200
-                    bg-slate-50 py-3 pl-10 pr-4 text-sm
-                    text-slate-700 shadow-sm outline-none
-                    transition
-                    placeholder:text-slate-400
-                    focus:border-blue-400
-                    focus:bg-white
-                    focus:ring-2
-                    focus:ring-blue-100
-                  "
-                />
-              </div>
-            </div>
-
-            {/* FROM DATE + TIME */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                From Date & Time
-              </label>
-
-              <div className="relative">
-                <Calendar
-                  size={18}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500"
-                />
-
-                <input
-                  type="datetime-local"
-                  value={fromDateTime}
-                  onChange={(e) => setFromDateTime(e.target.value)}
-                  className="
-                    w-full rounded-xl border border-slate-200
-                    bg-slate-50 py-3 pl-10 pr-3 text-sm
-                    text-slate-700 shadow-sm outline-none
-                    transition
-                    focus:border-blue-400
-                    focus:bg-white
-                    focus:ring-2
-                    focus:ring-blue-100
-                  "
-                />
-              </div>
-            </div>
-
-            {/* TO DATE + TIME */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                To Date & Time
-              </label>
-
-              <div className="relative">
-                <Calendar
-                  size={18}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-500"
-                />
-
-                <input
-                  type="datetime-local"
-                  value={toDateTime}
-                  onChange={(e) => setToDateTime(e.target.value)}
-                  className="
-                    w-full rounded-xl border border-slate-200
-                    bg-slate-50 py-3 pl-10 pr-3 text-sm
-                    text-slate-700 shadow-sm outline-none
-                    transition
-                    focus:border-purple-400
-                    focus:bg-white
-                    focus:ring-2
-                    focus:ring-purple-100
-                  "
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* FILTER FOOTER */}
-          <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm text-slate-500">
-              Showing{" "}
-              <span className="font-bold text-blue-600">
-                {filteredOrders.length}
-              </span>{" "}
-              of{" "}
-              <span className="font-semibold text-slate-700">
-                {orders.length}
-              </span>{" "}
-              {orders.length === 1 ? "order" : "orders"}
-            </p>
-
-            {hasFilters && (
-              <button
-                type="button"
-                onClick={clearFilters}
-                className="
-                  inline-flex items-center justify-center gap-2
-                  rounded-lg bg-slate-100 px-4 py-2
-                  text-sm font-semibold text-slate-600
-                  transition hover:bg-slate-200
-                "
-              >
-                <X size={16} />
-                Clear Filters
-              </button>
-            )}
-          </div>
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="text-sm font-semibold text-blue-600 hover:text-blue-700"
+            >
+              Clear Search
+            </button>
+          )}
         </div>
 
         {/* NO RESULTS */}
@@ -311,19 +207,15 @@ const AdminOrders = () => {
             </h2>
 
             <p className="mt-1 text-sm text-slate-500">
-              Try changing your search or date/time filters.
+              Try searching with a different name, email or order ID.
             </p>
 
-            {hasFilters && (
+            {search && (
               <button
-                onClick={clearFilters}
-                className="
-                  mt-5 rounded-lg bg-blue-600
-                  px-5 py-2.5 text-sm font-semibold
-                  text-white transition hover:bg-blue-700
-                "
+                onClick={() => setSearch("")}
+                className="mt-5 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
               >
-                Clear Filters
+                Clear Search
               </button>
             )}
           </div>
@@ -353,16 +245,13 @@ const AdminOrders = () => {
                       className="border-b transition hover:bg-slate-50"
                     >
                       <td className="p-4">
-                        <p className="text-sm font-semibold text-slate-800">
-                          {order.user_name}
+                        <p className="font-semibold text-sm text-slate-800">
+                          {/* {order.user_name} */}
+                          {order.id}
                         </p>
 
                         <p className="text-sm text-slate-500">
                           {order.user_email}
-                        </p>
-
-                        <p className="mt-1 text-xs text-slate-400">
-                          {order.id}
                         </p>
                       </td>
 
@@ -464,15 +353,6 @@ const AdminOrders = () => {
                     </div>
                   </div>
 
-                  {/* ORDER ID */}
-                  <div className="mt-4 border-t pt-4">
-                    <p className="text-xs text-slate-500">Order ID</p>
-
-                    <p className="mt-1 break-all text-xs font-medium text-slate-600">
-                      {order.id}
-                    </p>
-                  </div>
-
                   {/* PAYMENT */}
                   <div className="mt-4 flex items-center justify-between border-t pt-4">
                     <span className="text-sm text-slate-500">Payment</span>
@@ -517,3 +397,4 @@ const AdminOrders = () => {
 };
 
 export default AdminOrders;
+
