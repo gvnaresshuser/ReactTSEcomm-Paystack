@@ -37,7 +37,7 @@ const Login = () => {
   // AUTH STATE
   // ------------------------------------------
 
-  const { user, loading, error, successMessage } = useAppSelector(
+  const { user, loginLoading, error, successMessage } = useAppSelector(
     (state) => state.auth,
   );
 
@@ -266,10 +266,10 @@ const Login = () => {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loginLoading}
               className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 px-4 py-3.5 font-semibold text-white shadow-lg transition duration-200 hover:scale-[1.01] hover:shadow-xl active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
             >
-              {loading ? (
+              {loginLoading ? (
                 <>
                   <LoaderCircle
                     size={20}
@@ -292,7 +292,7 @@ const Login = () => {
 
             {/* ==================================
                 DEMO ACCOUNTS
-            ================================== */}          
+            ================================== */}
             <div className="demo-accounts">
               <div className="demo-title">🧪 Demo Accounts</div>
 
@@ -301,7 +301,7 @@ const Login = () => {
               </div>
 
               {/* ADMIN */}
-              <div              
+              <div
                 className="demo-account"
                 onClick={() => handleDemoLogin("admin@gmail.com", "123456")}
               >

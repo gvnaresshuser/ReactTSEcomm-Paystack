@@ -5,6 +5,9 @@ import type { AuthResponse, LoginData, RegisterData, User } from "../../types/au
 interface AuthState {
     user: User | null;
     loading: boolean;
+    loginLoading: boolean;
+    registerLoading: boolean;
+    logoutLoading: boolean;
     isInitialized: boolean;
     error: string | null;
     successMessage: string | null;
@@ -13,6 +16,9 @@ interface AuthState {
 const initialState: AuthState = {
     user: null,
     loading: false,
+    loginLoading: false,
+    registerLoading: false,
+    logoutLoading: false,
     isInitialized: false,
     error: null,
     successMessage: null
@@ -157,17 +163,17 @@ const authSlice = createSlice({
                 state.error = action.payload || "Registration failed";
             })
             .addCase(loginUser.pending, (state) => {
-                state.loading = true;
+                state.loginLoading = true;
                 state.error = null;
                 state.successMessage = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                state.loading = false;
+                state.loginLoading = false;
                 state.user = action.payload.user || null;
                 state.successMessage = action.payload.message;
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.loading = false;
+                state.loginLoading = false;
                 state.error = action.payload || "Login failed";
             })
            .addCase(getCurrentUser.pending, (state) => {
