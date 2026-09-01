@@ -379,6 +379,38 @@ E:\Jose\ReactTSEcomm-Paystack>
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
+E:\Jose\ReactTSEcomm-Paystack>git add .
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   DEPLOYMENT.txt
+        modified:   frontend/src/pages/TrackOrder copy 2.tsx
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "Track Order 01-09-2026 again"
+[main c352b67] Track Order 01-09-2026 again
+ 2 files changed, 116 insertions(+), 16 deletions(-)
+
+E:\Jose\ReactTSEcomm-Paystack>git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 1.62 KiB | 828.00 KiB/s, done.
+Total 7 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+   bea1cd8..c352b67  main -> main
+
+E:\Jose\ReactTSEcomm-Paystack>
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
 npx tsc --noEmit is a TypeScript type-checking command.
 
 Breaking it down
