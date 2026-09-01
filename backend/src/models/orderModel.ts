@@ -139,6 +139,7 @@ export const getOrdersByUser = async (userId: string) => {
       total_amount,
       status,
       payment_status,
+      payment_method,
       paystack_reference,
       created_at,
       updated_at
@@ -187,17 +188,27 @@ export const getOrderById = async (
   const orderResult = await pool.query(
     `
     SELECT
-      id,
-      user_id,
-      total_amount,
-      status,
-      payment_status,
-      paystack_reference,
-      created_at,
-      updated_at
-    FROM orders
-    WHERE id = $1
-      AND user_id = $2
+  o.id,
+  o.user_id,
+  o.total_amount,
+  o.status,
+  o.payment_status,
+  o.payment_method,
+  o.paystack_reference,
+  o.delivery_partner_id,
+  o.created_at,
+  o.updated_at,
+
+  dp.full_name AS delivery_partner_name,
+  dp.phone AS delivery_partner_phone
+
+FROM orders o
+
+LEFT JOIN delivery_partners dp
+  ON dp.id = o.delivery_partner_id
+
+WHERE o.id = $1
+  AND o.user_id = $2
     `,
     [orderId, userId],
   );
@@ -246,6 +257,7 @@ export const getAllOrders = async () => {
       o.total_amount,
       o.status,
       o.payment_status,
+      o.payment_method,
       o.paystack_reference,
       o.created_at,
       o.updated_at
@@ -326,6 +338,7 @@ export const updateOrderStatus = async (
 export const createPendingOrderFromLocalCart = async (
   userId: string,
   items: { productId: string; quantity: number }[],
+  paymentMethod: "Online" | "COD",
 ) => {
   if (!items || items.length === 0) {
     throw new Error("Cart is empty");
@@ -445,16 +458,6 @@ export const createPendingOrderFromLocalCart = async (
       });
     }
 
-    console.log("===== PAYSTACK ORDER DEBUG =====");
-    console.log("User ID:", userId);
-    console.log("Email:", email);
-    console.log("Total in NGN:", totalAmount);
-    console.log(
-      "Amount sent to Paystack:",
-      Math.round(totalAmount * 100),
-    );
-    console.log("================================");
-
     // -----------------------------------------------
     // CREATE LOCAL ORDER
     // -----------------------------------------------
@@ -465,24 +468,27 @@ export const createPendingOrderFromLocalCart = async (
         user_id,
         total_amount,
         status,
-        payment_status
+        payment_status,
+        payment_method
       )
       VALUES (
         $1,
         $2,
         'Pending',
-        'Pending'
-      )
+        'Pending',
+        $3
+      )      
       RETURNING
-        id,
-        user_id,
-        total_amount,
-        status,
-        payment_status,
-        created_at,
-        updated_at
+          id,
+          user_id,
+          total_amount,
+          status,
+          payment_status,
+          payment_method,
+          created_at,
+          updated_at
       `,
-      [userId, totalAmount],
+      [userId, totalAmount,paymentMethod],
     );
 
     const order = orderResult.rows[0];
@@ -518,12 +524,33 @@ export const createPendingOrderFromLocalCart = async (
     await client.query("COMMIT");
 
     // -----------------------------------------------
+// COD ORDER
+// -----------------------------------------------
+
+if (paymentMethod === "COD") {
+  return {
+    order,
+    paystack: null,
+  };
+}
+
+    // -----------------------------------------------
     // PAYSTACK INITIALIZATION
     // -----------------------------------------------
 
     const amountInKobo = Math.round(
       totalAmount * 100,
     );
+
+        console.log("===== PAYSTACK ORDER DEBUG =====");
+    console.log("User ID:", userId);
+    console.log("Email:", email);
+    console.log("Total in NGN:", totalAmount);
+    console.log(
+      "Amount sent to Paystack:",
+      Math.round(totalAmount * 100),
+    );
+    console.log("================================");
 
     try {
       const paystackResponse = await paystack.post(

@@ -252,24 +252,27 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        modified:   frontend/src/pages/Login.tsx
-        modified:   frontend/src/redux/slices/authSlice.ts
+        new file:   ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
+        modified:   backend.zip
+        modified:   backend/src/app.ts
+        modified:   frontend.zip
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "logging in...spinner solved"
-[main 39bf4a6] logging in...spinner solved
- 3 files changed, 34 insertions(+), 22 deletions(-)
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "solved now"
+[main 3ee82c4] solved now
+ 5 files changed, 16 insertions(+), 21 deletions(-)
+ create mode 100644 ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 19, done.
-Counting objects: 100% (19/19), done.
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (10/10), done.
-Writing objects: 100% (10/10), 1.33 KiB | 339.00 KiB/s, done.
-Total 10 (delta 7), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 5.21 MiB | 796.00 KiB/s, done.
+Total 9 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 6 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   389ba2d..39bf4a6  main -> main
+   39bf4a6..3ee82c4  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 

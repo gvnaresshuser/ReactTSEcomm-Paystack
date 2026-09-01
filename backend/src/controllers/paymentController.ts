@@ -28,7 +28,7 @@ export const createPaymentOrder = async (
       });
     }
 
-    const { items } = req.body;
+    const { items, paymentMethod } = req.body;
 
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
@@ -37,19 +37,36 @@ export const createPaymentOrder = async (
       });
     }
 
-    const result = await createPendingOrderFromLocalCart(
-      userId,
-      items,
-    );
+    if (
+      paymentMethod !== "Online" &&
+      paymentMethod !== "COD"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid payment method",
+      });
+    }
+
+    const result =
+      await createPendingOrderFromLocalCart(
+        userId,
+        items,
+        paymentMethod,
+      );
 
     return res.status(201).json({
       success: true,
-      message: "Payment order created successfully",
+
+      message:
+        paymentMethod === "COD"
+          ? "COD order created successfully"
+          : "Payment order created successfully",
 
       order: result.order,
 
       paystack: result.paystack,
     });
+
   } catch (error) {
     console.error(
       "Create payment order error:",

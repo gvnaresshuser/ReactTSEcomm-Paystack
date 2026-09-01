@@ -5,6 +5,7 @@ import {
   Package,
   ShoppingCart,
   ShieldCheck,
+  Truck,
 } from "lucide-react";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/slices/authSlice";
@@ -93,6 +94,11 @@ const AdminLayout = () => {
             <NavLink to="/admin/orders" className={navClass}>
               <ShoppingCart size={19} />
               <span>Orders</span>
+            </NavLink>
+
+            <NavLink to="/admin/delivery-partners" className={navClass}>
+              <Truck size={19} />
+              <span>Delivery Partners</span>
             </NavLink>
           </nav>
         </div>

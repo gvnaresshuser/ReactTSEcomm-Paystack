@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import { LoaderCircle, Search, Calendar, X } from "lucide-react";
-import Swal from "sweetalert2";
-interface DeliveryPartner {
-  id: string;
-  full_name: string;
-  phone: string;
-  status: "active" | "inactive";
-}
+
 interface Order {
   id: string;
   user_name: string;
@@ -16,10 +10,6 @@ interface Order {
   status: string;
   payment_status: string;
   created_at: string;
-
-  delivery_partner_id: string | null;
-  delivery_partner_name: string | null;
-  delivery_partner_phone: string | null;
 }
 
 const statuses = [
@@ -58,28 +48,11 @@ const getPaymentStyle = (status: string) => {
 const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [partners, setPartners] = useState<DeliveryPartner[]>([]);
-
-  const [assigningOrderId, setAssigningOrderId] = useState<string | null>(null);
 
   // Search + Date/Time filters
   const [search, setSearch] = useState("");
   const [fromDateTime, setFromDateTime] = useState("");
   const [toDateTime, setToDateTime] = useState("");
-
-  const fetchPartners = async () => {
-    try {
-      const response = await api.get("/api/admin/delivery-partners");
-
-      const activePartners = response.data.deliveryPartners.filter(
-        (partner: DeliveryPartner) => partner.status === "active",
-      );
-
-      setPartners(activePartners);
-    } catch (error) {
-      console.error("Failed to load delivery partners:", error);
-    }
-  };
 
   const fetchOrders = async () => {
     try {
@@ -94,7 +67,6 @@ const AdminOrders = () => {
 
   useEffect(() => {
     fetchOrders();
-    fetchPartners();
   }, []);
 
   const updateStatus = async (id: string, status: string) => {
@@ -103,81 +75,6 @@ const AdminOrders = () => {
       fetchOrders();
     } catch (error) {
       console.error("Failed to update status:", error);
-    }
-  };
-
-  const handleAssignPartner = async (orderId: string, partnerId: string) => {
-    if (!partnerId) return;
-
-    try {
-      setAssigningOrderId(orderId);
-
-      await api.put(`/api/admin/orders/${orderId}/delivery-partner`, {
-        partnerId,
-      });
-
-      const partner = partners.find((item) => item.id === partnerId);
-
-      setOrders((current) =>
-        current.map((order) =>
-          order.id === orderId
-            ? {
-                ...order,
-                delivery_partner_id: partnerId,
-                delivery_partner_name: partner?.full_name || null,
-                delivery_partner_phone: partner?.phone || null,
-              }
-            : order,
-        ),
-      );
-
-      await Swal.fire({
-        icon: "success",
-        title: "Partner Assigned!",
-        text: `${partner?.full_name || "Delivery partner"} has been assigned successfully.`,
-
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2200,
-        timerProgressBar: true,
-
-        background: "linear-gradient(135deg, #2563eb, #4f46e5, #7c3aed)",
-
-        color: "#ffffff",
-
-        customClass: {
-          popup: "rounded-2xl shadow-2xl",
-          title: "text-lg font-bold text-white",
-          htmlContainer: "text-sm text-blue-50",
-        },
-      });
-    } catch (error: any) {
-      console.error("Assign delivery partner error:", error);
-
-      await Swal.fire({
-        icon: "error",
-        title: "Assignment Failed",
-        text:
-          error.response?.data?.message || "Failed to assign delivery partner.",
-
-        confirmButtonText: "OK",
-        buttonsStyling: false,
-
-        background: "linear-gradient(135deg, #991b1b, #dc2626, #ef4444)",
-
-        color: "#ffffff",
-
-        customClass: {
-          popup: "rounded-2xl shadow-2xl",
-          title: "text-xl font-bold text-white",
-          htmlContainer: "text-sm text-red-50",
-          confirmButton:
-            "rounded-xl bg-white px-6 py-3 text-sm font-semibold text-red-600",
-        },
-      });
-    } finally {
-      setAssigningOrderId(null);
     }
   };
 
@@ -446,8 +343,6 @@ const AdminOrders = () => {
                     <th className="p-4">Payment</th>
                     <th className="p-4">Status</th>
                     <th className="p-4">Update</th>
-                    <th className="p-4">Delivery Partner</th>
-                    <th className="p-4">Update</th>
                   </tr>
                 </thead>
 
@@ -512,37 +407,6 @@ const AdminOrders = () => {
                           {statuses.map((status) => (
                             <option key={status} value={status}>
                               {status}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                      <td className="px-4 py-4">
-                        <select
-                          value={order.delivery_partner_id || ""}
-                          disabled={assigningOrderId === order.id}
-                          onChange={(e) =>
-                            handleAssignPartner(order.id, e.target.value)
-                          }
-                          className="
-      w-full min-w-[190px]
-      rounded-xl border border-slate-200
-      bg-slate-50 px-3 py-2
-      text-sm font-medium text-slate-700
-      outline-none
-      transition
-      focus:border-blue-500
-      focus:bg-white
-      focus:ring-2
-      focus:ring-blue-100
-      disabled:cursor-not-allowed
-      disabled:opacity-60
-    "
-                        >
-                          <option value="">Select Partner</option>
-
-                          {partners.map((partner) => (
-                            <option key={partner.id} value={partner.id}>
-                              {partner.full_name} - {partner.phone}
                             </option>
                           ))}
                         </select>
@@ -638,38 +502,6 @@ const AdminOrders = () => {
                       {statuses.map((status) => (
                         <option key={status} value={status}>
                           {status}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="mt-4">
-                    <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400">
-                      Delivery Partner
-                    </label>
-
-                    <select
-                      value={order.delivery_partner_id || ""}
-                      disabled={assigningOrderId === order.id}
-                      onChange={(e) =>
-                        handleAssignPartner(order.id, e.target.value)
-                      }
-                      className="
-      w-full rounded-xl
-      border border-slate-200
-      bg-slate-50 px-3 py-3
-      text-sm font-medium text-slate-700
-      outline-none
-      focus:border-blue-500
-      focus:bg-white
-      focus:ring-2
-      focus:ring-blue-100
-    "
-                    >
-                      <option value="">Select Delivery Partner</option>
-
-                      {partners.map((partner) => (
-                        <option key={partner.id} value={partner.id}>
-                          {partner.full_name} - {partner.phone}
                         </option>
                       ))}
                     </select>

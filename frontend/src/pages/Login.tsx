@@ -328,13 +328,28 @@ const Login = () => {
                 </span>
               </div>
             </div>
+
+            <div className="mt-0 border-t border-slate-200 pt-5 text-center">
+              <p className="text-sm text-slate-500">
+                Are you a delivery partner?
+              </p>
+
+              <button
+                type="button"
+                onClick={() => navigate("/partner/login")}
+                className="mt-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+              >
+                Partner Login →
+              </button>
+            </div>
           </form>
+          <hr className="mt-2 border-t-gray-400" />
 
           {/* ==================================
               REGISTER SECTION
           ================================== */}
 
-          <div className="mt-1 border-t border-slate-100 pt-6 text-center">
+          <div className="mt-1 border-t border-slate-100 pt-2 text-center">
             <p className="text-sm text-slate-600">Don't have an account?</p>
 
             <Link

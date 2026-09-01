@@ -11,6 +11,8 @@ import {
   Clock3,
   XCircle,
   Search,
+  //MapPin,
+  Truck,
 } from "lucide-react";
 import api from "../services/api";
 
@@ -19,6 +21,7 @@ interface Order {
   total_amount: string;
   status: string;
   payment_status: string;
+  payment_method: "Online" | "COD";
   razorpay_order_id: string | null;
   razorpay_payment_id: string | null;
   created_at: string;
@@ -83,8 +86,10 @@ const Orders = () => {
   // ========================================
   // FILTER ORDERS
   // ========================================
+  //console.log(orders);
 
   const filteredOrders = orders.filter((order) => {
+   
     const searchText = search.toLowerCase().trim();
 
     // ----------------------------------------
@@ -474,7 +479,7 @@ const Orders = () => {
 
                   {/* ORDER INFORMATION */}
 
-                  <div className="mt-6 grid gap-4 border-t border-slate-100 pt-5 sm:grid-cols-3">
+                  <div className="mt-6 grid gap-4 border-t border-slate-100 pt-5 sm:grid-cols-2 lg:grid-cols-4">
                     {/* TOTAL */}
 
                     <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
@@ -534,11 +539,33 @@ const Orders = () => {
                         </span>
                       </div>
                     </div>
+
+                    {/* PAYMENT METHOD */}
+
+                    <div className="rounded-xl bg-slate-50 p-4">
+                      <p className="text-sm font-medium text-slate-500">
+                        Payment Method
+                      </p>
+
+                      <div className="mt-2">
+                        <span
+                          className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${
+                            order.payment_method === "COD"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-blue-100 text-blue-700"
+                          }`}
+                        >
+                          {order.payment_method === "COD"
+                            ? "Cash on Delivery"
+                            : "Pay Online"}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* FOOTER */}
 
-                  <div className="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                  {/* <div className="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-xs text-slate-400">
                       Order placed successfully
                     </p>
@@ -550,6 +577,40 @@ const Orders = () => {
                       View Order Details
                       <ArrowRight size={17} />
                     </Link>
+                  </div> */}
+                  <div className="mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-xs text-slate-400">
+                      Order placed successfully
+                    </p>
+
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <Link
+                        to={`/orders/${order.id}`}
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:scale-[1.02] hover:shadow-lg sm:w-auto"
+                      >
+                        View Order Details
+                        <ArrowRight size={17} />
+                      </Link>
+
+                      {/*  {order.status === "OutForDelivery" && (
+                        <Link
+                          to={`/orders/${order.id}/tracking`}
+                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-50 px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 sm:w-auto"
+                        >
+                          <MapPin size={17} />
+                          Track Delivery
+                        </Link>
+                      )} */}
+                      {order.status === "OutForDelivery" && (
+                        <Link
+                          to={`/orders/${order.id}/tracking`}
+                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-50 px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 sm:w-auto"
+                        >
+                          <Truck size={17} />
+                          Track Order
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </article>

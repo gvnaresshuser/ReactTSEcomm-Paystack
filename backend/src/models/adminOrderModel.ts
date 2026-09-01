@@ -9,19 +9,29 @@ export const getAllOrdersAdmin = async () => {
       u.email AS user_email,
       o.total_amount,
       o.status,
+      o.payment_method,
       o.payment_status,
       o.paystack_reference,
+
+      o.delivery_partner_id,
+      dp.full_name AS delivery_partner_name,
+      dp.phone AS delivery_partner_phone,
+
       o.created_at,
       o.updated_at
     FROM orders o
     JOIN users u ON u.id = o.user_id
+    LEFT JOIN delivery_partners dp
+      ON dp.id = o.delivery_partner_id
     ORDER BY o.created_at DESC
   `);
 
   return result.rows;
 };
 
-export const getOrderByIdAdmin = async (orderId: string) => {
+export const getOrderByIdAdmin = async (
+  orderId: string,
+) => {
   const orderResult = await pool.query(
     `
     SELECT
@@ -31,18 +41,28 @@ export const getOrderByIdAdmin = async (orderId: string) => {
       u.email AS user_email,
       o.total_amount,
       o.status,
+      o.payment_method,
       o.payment_status,
       o.paystack_reference,
+
+      o.delivery_partner_id,
+      dp.full_name AS delivery_partner_name,
+      dp.phone AS delivery_partner_phone,
+
       o.created_at,
       o.updated_at
     FROM orders o
     JOIN users u ON u.id = o.user_id
+    LEFT JOIN delivery_partners dp
+      ON dp.id = o.delivery_partner_id
     WHERE o.id = $1
     `,
     [orderId],
   );
 
-  if (orderResult.rows.length === 0) return null;
+  if (orderResult.rows.length === 0) {
+    return null;
+  }
 
   const itemsResult = await pool.query(
     `
@@ -87,6 +107,59 @@ export const updateOrderStatusAdmin = async (
       updated_at
     `,
     [status, orderId],
+  );
+
+  return result.rows[0] || null;
+};
+
+export const assignDeliveryPartner = async (
+  orderId: string,
+  partnerId: string,
+) => {
+  const result = await pool.query(
+    `
+    UPDATE orders
+    SET
+      delivery_partner_id = $1,
+      updated_at = NOW()
+    WHERE
+      id = $2
+      AND (
+        payment_method = 'COD'
+        OR payment_status = 'Paid'
+      )
+    RETURNING
+      id,
+      delivery_partner_id,
+      status,
+      payment_method,
+      payment_status,
+      updated_at
+    `,
+    [partnerId, orderId],
+  );
+
+  return result.rows[0] || null;
+};
+
+
+export const removeDeliveryPartner = async (
+  orderId: string,
+) => {
+  const result = await pool.query(
+    `
+    UPDATE orders
+    SET
+      delivery_partner_id = NULL,
+      updated_at = NOW()
+    WHERE id = $1
+    RETURNING
+      id,
+      delivery_partner_id,
+      status,
+      updated_at
+    `,
+    [orderId],
   );
 
   return result.rows[0] || null;

@@ -23,6 +23,9 @@ const Checkout = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"Online" | "COD">(
+    "Online",
+  );
 
   const items = cart.items;
 
@@ -67,7 +70,6 @@ const Checkout = () => {
       <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-purple-50 px-4 py-10 sm:px-6 lg:px-8">
         <div className="w-full max-w-2xl">
           <div className="rounded-3xl border border-white/60 bg-white/90 p-8 text-center shadow-2xl backdrop-blur sm:p-12">
-
             <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 shadow-inner">
               <ShoppingCart
                 size={48}
@@ -92,17 +94,13 @@ const Checkout = () => {
               <ShoppingCart size={19} />
               Continue Shopping
             </Link>
-
           </div>
         </div>
       </main>
     );
   }
 
-  const totalItems = items.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
 
   // ----------------------------------------
   // PROCEED TO PAYMENT
@@ -114,28 +112,52 @@ const Checkout = () => {
       setError(null);
 
       // --------------------------------------
-      // CREATE ORDER + INITIALIZE PAYSTACK
+      // CREATE ORDER
       // --------------------------------------
 
-      const response = await api.post(
-        "/api/payments/create-order",
-        {
-          items: items.map((item) => ({
-            productId: item.product_id,
-            quantity: item.quantity,
-          })),
-        },
-      );
+      const response = await api.post("/api/payments/create-order", {
+        items: items.map((item) => ({
+          productId: item.product_id,
+          quantity: item.quantity,
+        })),
 
-      const {
-        order,
-        paystack,
-      } = response.data;
+        paymentMethod,
+      });
+
+      const { order, paystack } = response.data;
+
+      // --------------------------------------
+      // COD
+      // --------------------------------------
+
+      if (paymentMethod === "COD") {
+        console.log("COD order created:", order);
+
+        dispatch(clearCart());
+
+        setLoading(false);
+
+        navigate("/orders");
+
+        return;
+      }
+
+      // --------------------------------------
+      // ONLINE PAYMENT
+      // --------------------------------------
+
+      if (!paystack?.access_code) {
+        throw new Error("Paystack payment could not be initialized.");
+      }
 
       console.log("===== PAYSTACK CHECKOUT =====");
+
       console.log("Order ID:", order.id);
+
       console.log("Reference:", paystack.reference);
+
       console.log("Access Code:", paystack.access_code);
+
       console.log("============================");
 
       // --------------------------------------
@@ -144,86 +166,61 @@ const Checkout = () => {
 
       const paystackPop = new PaystackPop();
 
-      paystackPop.resumeTransaction(
-        paystack.access_code,
-        {
-          onSuccess: async (transaction) => {
-            try {
-              console.log(
-                "Paystack transaction:",
-                transaction,
-              );
+      paystackPop.resumeTransaction(paystack.access_code, {
+        onSuccess: async (transaction) => {
+          try {
+            console.log("Paystack transaction:", transaction);
 
-              // --------------------------------
-              // VERIFY PAYMENT WITH BACKEND
-              // --------------------------------
+            // --------------------------------
+            // VERIFY PAYMENT
+            // --------------------------------
 
-              const verifyResponse = await api.post(
-                "/api/payments/verify",
-                {
-                  reference: transaction.reference,
-                },
-              );
+            const verifyResponse = await api.post("/api/payments/verify", {
+              reference: transaction.reference,
+            });
 
-              if (verifyResponse.data.success) {
-                dispatch(clearCart());
+            if (verifyResponse.data.success) {
+              dispatch(clearCart());
 
-                setLoading(false);
+              setLoading(false);
 
-                navigate("/payment-success");
-              } else {
-                setError(
-                  verifyResponse.data.message ||
-                    "Payment verification failed",
-                );
-
-                setLoading(false);
-              }
-            } catch (error: any) {
-              console.error(
-                "Payment verification error:",
-                error,
-              );
-
+              navigate("/payment-success");
+            } else {
               setError(
-                error.response?.data?.message ||
-                  "Payment verification failed",
+                verifyResponse.data.message || "Payment verification failed",
               );
 
               setLoading(false);
             }
-          },
+          } catch (error: any) {
+            console.error("Payment verification error:", error);
 
-          onCancel: () => {
-            console.log(
-              "Paystack payment cancelled",
+            setError(
+              error.response?.data?.message || "Payment verification failed",
             );
 
             setLoading(false);
-
-            setError(
-              "Payment was cancelled.",
-            );
-          },
+          }
         },
-      );
 
+        onCancel: () => {
+          console.log("Paystack payment cancelled");
+
+          setLoading(false);
+
+          setError("Payment was cancelled.");
+        },
+      });
     } catch (error: any) {
-      console.error(
-        "Payment initiation error:",
-        error,
-      );
+      console.error("Order/payment initiation error:", error);
 
-      const message =
-        error.response?.data?.message ||
-        "Unable to start payment";
+      const message = error.response?.data?.message || "Unable to create order";
 
       setError(message);
 
       setLoading(false);
     }
   };
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-purple-50 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -432,6 +429,77 @@ const Checkout = () => {
                   FREE
                 </span>
               </div>
+              {/* PAYMENT METHOD */}
+
+              <div className="mt-6">
+                <h3 className="mb-3 text-sm font-bold text-slate-800">
+                  Payment Method
+                </h3>
+
+                <div className="space-y-3">
+                  {/* ONLINE PAYMENT */}
+
+                  <label
+                    className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition ${
+                      paymentMethod === "Online"
+                        ? "border-blue-500 bg-blue-50 ring-2 ring-blue-100"
+                        : "border-slate-200 bg-white hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Online"
+                      checked={paymentMethod === "Online"}
+                      onChange={() => setPaymentMethod("Online")}
+                      className="h-4 w-4"
+                    />
+
+                    <CreditCard size={20} className="text-blue-600" />
+
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">
+                        Pay Online
+                      </p>
+
+                      <p className="text-xs text-slate-500">
+                        Secure payment through Paystack
+                      </p>
+                    </div>
+                  </label>
+
+                  {/* COD */}
+
+                  <label
+                    className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition ${
+                      paymentMethod === "COD"
+                        ? "border-green-500 bg-green-50 ring-2 ring-green-100"
+                        : "border-slate-200 bg-white hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="COD"
+                      checked={paymentMethod === "COD"}
+                      onChange={() => setPaymentMethod("COD")}
+                      className="h-4 w-4"
+                    />
+
+                    <Truck size={20} className="text-green-600" />
+
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">
+                        Cash on Delivery
+                      </p>
+
+                      <p className="text-xs text-slate-500">
+                        Pay cash when your order is delivered
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              </div>
 
               {/* TOTAL */}
 
@@ -455,7 +523,7 @@ const Checkout = () => {
                 onClick={handleProceedToPayment}
                 className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 px-4 py-3.5 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {loading ? (
+                {/* {loading ? (
                   <>
                     <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                     Opening Payment...
@@ -464,6 +532,26 @@ const Checkout = () => {
                   <>
                     <CreditCard size={19} />
                     Proceed to Payment
+                  </>
+                )} */}
+                {loading ? (
+                  <>
+                    <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    {paymentMethod === "COD"
+                      ? "Placing Order..."
+                      : "Opening Payment..."}
+                  </>
+                ) : (
+                  <>
+                    {paymentMethod === "COD" ? (
+                      <Truck size={19} />
+                    ) : (
+                      <CreditCard size={19} />
+                    )}
+
+                    {paymentMethod === "COD"
+                      ? "Place Order"
+                      : "Proceed to Payment"}
                   </>
                 )}
               </button>
@@ -474,7 +562,9 @@ const Checkout = () => {
                 <LockKeyhole size={15} className="text-green-600" />
 
                 <p className="text-xs text-slate-500">
-                  Secure payment powered by Paystack
+                  {paymentMethod === "COD"
+                    ? "Pay cash when your order is delivered"
+                    : "Secure payment powered by Paystack"}
                 </p>
               </div>
 
@@ -494,4 +584,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-

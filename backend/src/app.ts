@@ -10,7 +10,12 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import adminProductRoutes from "./routes/adminProductRoutes.js";
 import adminOrderRoutes from "./routes/adminOrderRoutes.js";
 import adminDashboardRoutes from "./routes/adminDashboardRoutes.js";
-
+import deliveryPartnerRoutes from "./routes/deliveryPartnerRoutes.js";
+import partnerAuthRoutes from "./routes/partnerAuthRoutes.js";
+import partnerDeliveryRoutes from "./routes/partnerDeliveryRoutes.js";
+import partnerTrackingRoutes
+  from "./routes/partnerTrackingRoutes.js";
+import geocodeRoutes from "./routes/geocode.routes.js";
 const app = express();
 
 //--------------------
@@ -66,6 +71,25 @@ app.use(
 app.use("/api/admin/products", adminProductRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/admin/dashboard", adminDashboardRoutes);
+app.use(
+  "/api/admin/delivery-partners",
+  deliveryPartnerRoutes,
+);
+app.use(
+  "/api/partner/auth",
+  partnerAuthRoutes,
+);
+app.use(
+  "/api/partner/deliveries",
+  partnerDeliveryRoutes,
+);
+app.use(
+  "/api/partner/tracking",
+  partnerTrackingRoutes,
+);
+app.use("/api/geocode", geocodeRoutes);
+
+
 
 // Test route
 app.get(

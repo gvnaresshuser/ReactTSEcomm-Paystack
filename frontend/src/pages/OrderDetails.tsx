@@ -29,6 +29,7 @@ interface Order {
   total_amount: string;
   status: string;
   payment_status: string;
+  payment_method: "Online" | "COD";
   razorpay_order_id: string | null;
   razorpay_payment_id: string | null;
   created_at: string;
@@ -392,11 +393,33 @@ const OrderDetails = () => {
               </div>
 
               {/* PAYMENT */}
+              {/* PAYMENT METHOD */}
               <div className="flex items-center justify-between border-b border-slate-100 py-4">
                 <div className="flex items-center gap-2">
                   <CreditCard size={18} className="text-blue-500" />
 
-                  <span className="text-sm text-slate-600">Payment</span>
+                  <span className="text-sm text-slate-600">Payment Method</span>
+                </div>
+
+                <span
+                  className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ${
+                    order.payment_method === "COD"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-blue-100 text-blue-700"
+                  }`}
+                >
+                  {order.payment_method === "COD"
+                    ? "Cash on Delivery"
+                    : "Pay Online"}
+                </span>
+              </div>
+
+              {/* PAYMENT STATUS */}
+              <div className="flex items-center justify-between border-b border-slate-100 py-4">
+                <div className="flex items-center gap-2">
+                  <CreditCard size={18} className="text-blue-500" />
+
+                  <span className="text-sm text-slate-600">Payment Status</span>
                 </div>
 
                 <span
