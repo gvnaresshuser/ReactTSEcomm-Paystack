@@ -243,7 +243,16 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 
+Microsoft Windows [Version 10.0.26100.8246]
+(c) Microsoft Corporation. All rights reserved.
+
 E:\Jose\ReactTSEcomm-Paystack>git add .
+warning: in the working copy of 'backend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/src/App copy 2.tsx', LF will be replaced by CRLF the next time Git touches it
 
 E:\Jose\ReactTSEcomm-Paystack>git status
 On branch main
@@ -252,27 +261,118 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        new file:   ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
-        modified:   backend.zip
+        new file:   IMAGES/logo.jpeg
+        deleted:    ReactTSEcomm-Paystack-29-08-2026.zip
+        deleted:    ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
+        deleted:    ReactTSEcomm-Paystack-30-08-2026.zip
+        deleted:    backend.zip
+        modified:   backend/package-lock.json
+        modified:   backend/package.json
         modified:   backend/src/app.ts
-        modified:   frontend.zip
+        modified:   backend/src/controllers/adminOrderController.ts
+        new file:   backend/src/controllers/deliveryPartnerController.ts
+        new file:   backend/src/controllers/partnerAuthController.ts
+        new file:   backend/src/controllers/partnerDeliveryController.ts
+        new file:   backend/src/controllers/partnerTrackingController.ts
+        modified:   backend/src/controllers/paymentController.ts
+        new file:   backend/src/middleware/partnerAuthMiddleware.ts
+        modified:   backend/src/models/adminOrderModel.ts
+        new file:   backend/src/models/deliveryPartnerModel.ts
+        modified:   backend/src/models/orderModel.ts
+        new file:   backend/src/models/partnerAuthModel.ts
+        new file:   backend/src/models/partnerDeliveryModel.ts
+        new file:   backend/src/models/partnerTrackingModel.ts
+        modified:   backend/src/routes/adminOrderRoutes.ts
+        new file:   backend/src/routes/deliveryPartnerRoutes.ts
+        new file:   backend/src/routes/geocode.routes.ts
+        new file:   backend/src/routes/partnerAuthRoutes.ts
+        new file:   backend/src/routes/partnerDeliveryRoutes.ts
+        new file:   backend/src/routes/partnerTrackingRoutes.ts
+        deleted:    frontend.zip
+        modified:   frontend/package-lock.json
+        modified:   frontend/package.json
+        new file:   frontend/src/App copy 2.tsx
+        modified:   frontend/src/App.tsx
+        new file:   frontend/src/components/PartnerProtectedRoute.tsx
+        modified:   frontend/src/pages/Checkout.tsx
+        new file:   frontend/src/pages/LiveOrderTracking.tsx
+        modified:   frontend/src/pages/Login.tsx
+        modified:   frontend/src/pages/OrderDetails.tsx
+        modified:   frontend/src/pages/Orders.tsx
+        new file:   frontend/src/pages/TrackOrder copy 2.tsx
+        new file:   frontend/src/pages/TrackOrder copy.tsx
+        new file:   frontend/src/pages/TrackOrder.tsx
+        new file:   frontend/src/pages/admin/AdminDeliveryPartnerForm.tsx
+        new file:   frontend/src/pages/admin/AdminDeliveryPartners.tsx
+        modified:   frontend/src/pages/admin/AdminLayout.tsx
+        new file:   frontend/src/pages/admin/AdminOrders copy 2.tsx
+        modified:   frontend/src/pages/admin/AdminOrders.tsx
+        new file:   frontend/src/pages/partner/PartnerDashboard.tsx
+        new file:   frontend/src/pages/partner/PartnerDeliveries-LiveTracking.tsx
+        new file:   frontend/src/pages/partner/PartnerDeliveries.tsx
+        new file:   frontend/src/pages/partner/PartnerLayout.tsx
+        new file:   frontend/src/pages/partner/PartnerLiveTracking copy.tsx
+        new file:   frontend/src/pages/partner/PartnerLiveTracking.tsx
+        new file:   frontend/src/pages/partner/PartnerLogin.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "solved now"
-[main 3ee82c4] solved now
- 5 files changed, 16 insertions(+), 21 deletions(-)
- create mode 100644 ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "Track Order 01-09-2026"
+[main bea1cd8] Track Order 01-09-2026
+ 54 files changed, 9124 insertions(+), 146 deletions(-)
+ create mode 100644 IMAGES/logo.jpeg
+ delete mode 100644 ReactTSEcomm-Paystack-29-08-2026.zip
+ delete mode 100644 ReactTSEcomm-Paystack-30-08-2026-iphone-working.zip
+ delete mode 100644 ReactTSEcomm-Paystack-30-08-2026.zip
+ delete mode 100644 backend.zip
+ create mode 100644 backend/src/controllers/deliveryPartnerController.ts
+ create mode 100644 backend/src/controllers/partnerAuthController.ts
+ create mode 100644 backend/src/controllers/partnerDeliveryController.ts
+ create mode 100644 backend/src/controllers/partnerTrackingController.ts
+ create mode 100644 backend/src/middleware/partnerAuthMiddleware.ts
+ create mode 100644 backend/src/models/deliveryPartnerModel.ts
+ create mode 100644 backend/src/models/partnerAuthModel.ts
+ create mode 100644 backend/src/models/partnerDeliveryModel.ts
+ create mode 100644 backend/src/models/partnerTrackingModel.ts
+ create mode 100644 backend/src/routes/deliveryPartnerRoutes.ts
+ create mode 100644 backend/src/routes/geocode.routes.ts
+ create mode 100644 backend/src/routes/partnerAuthRoutes.ts
+ create mode 100644 backend/src/routes/partnerDeliveryRoutes.ts
+ create mode 100644 backend/src/routes/partnerTrackingRoutes.ts
+ delete mode 100644 frontend.zip
+ create mode 100644 frontend/src/App copy 2.tsx
+ create mode 100644 frontend/src/components/PartnerProtectedRoute.tsx
+ create mode 100644 frontend/src/pages/LiveOrderTracking.tsx
+ create mode 100644 frontend/src/pages/TrackOrder copy 2.tsx
+ create mode 100644 frontend/src/pages/TrackOrder copy.tsx
+ create mode 100644 frontend/src/pages/TrackOrder.tsx
+ create mode 100644 frontend/src/pages/admin/AdminDeliveryPartnerForm.tsx
+ create mode 100644 frontend/src/pages/admin/AdminDeliveryPartners.tsx
+ create mode 100644 frontend/src/pages/admin/AdminOrders copy 2.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerDashboard.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerDeliveries-LiveTracking.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerDeliveries.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerLayout.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerLiveTracking copy.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerLiveTracking.tsx
+ create mode 100644 frontend/src/pages/partner/PartnerLogin.tsx
+
+E:\Jose\ReactTSEcomm-Paystack>git commit
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 16, done.
-Counting objects: 100% (16/16), done.
+Enumerating objects: 92, done.
+Counting objects: 100% (92/92), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (9/9), done.
-Writing objects: 100% (9/9), 5.21 MiB | 796.00 KiB/s, done.
-Total 9 (delta 7), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (7/7), completed with 6 local objects.
+Compressing objects: 100% (62/62), done.
+Writing objects: 100% (63/63), 118.33 KiB | 3.58 MiB/s, done.
+Total 63 (delta 27), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (27/27), completed with 22 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   39bf4a6..3ee82c4  main -> main
+   3ee82c4..bea1cd8  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 
