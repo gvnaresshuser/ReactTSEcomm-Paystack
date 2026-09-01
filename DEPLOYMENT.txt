@@ -379,6 +379,7 @@ E:\Jose\ReactTSEcomm-Paystack>
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
+
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
 E:\Jose\ReactTSEcomm-Paystack>git status
@@ -406,9 +407,98 @@ remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
    bea1cd8..c352b67  main -> main
 
+E:\Jose\ReactTSEcomm-Paystack>cd backend
+
+E:\Jose\ReactTSEcomm-Paystack\backend>npm install --save-dev @types/bcrypt
+
+up to date, audited 198 packages in 4s
+
+40 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+E:\Jose\ReactTSEcomm-Paystack\backend>npm install --save-dev @types/bcrypt
+
+up to date, audited 198 packages in 2s
+
+40 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+E:\Jose\ReactTSEcomm-Paystack\backend>cd ..
+
+E:\Jose\ReactTSEcomm-Paystack>git add .
+warning: in the working copy of 'backend/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   DEPLOYMENT.txt
+
+
+E:\Jose\ReactTSEcomm-Paystack>git add package.json package-lock.json
+fatal: pathspec 'package.json' did not match any files
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "Add bcrypt TypeScript types"
+[main 247526c] Add bcrypt TypeScript types
+ 1 file changed, 32 insertions(+)
+
+E:\Jose\ReactTSEcomm-Paystack>git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 530 bytes | 176.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+   c352b67..247526c  main -> main
+
+E:\Jose\ReactTSEcomm-Paystack>git add .
+warning: in the working copy of 'backend/package.json', LF will be replaced by CRLF the next time Git touches it
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   backend/package.json
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "moved types bcrypt to dep section"
+[main a90f22a] moved types bcrypt to dep section
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+E:\Jose\ReactTSEcomm-Paystack>git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 372 bytes | 372.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+   247526c..a90f22a  main -> main
+
 E:\Jose\ReactTSEcomm-Paystack>
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+https://react-ts-ecomm-paystack-frontend.vercel.app/
+
+
+
+
+IMPORTANT - NEVER KEEP @types IN devDependencies SECTION THEY WILL NOT INSTALL IN LIVE SERVER
+MOVE THIS FROM devDependencies TO dependencies in LIVE DEPLOYMENT
+"@types/bcrypt": "^6.0.0",
 
 
 npx tsc --noEmit is a TypeScript type-checking command.
@@ -422,6 +512,19 @@ tsc → TypeScript Compiler.
 So, in simple words:
 
 "Check my TypeScript project for errors, but don't create or modify any output files."
+
+
+npx tsc --noEmit means:
+
+Run the TypeScript compiler and check your code for TypeScript errors, but don't generate any JavaScript files.
+
+Breaking it down
+npx tsc --noEmit
+npx → runs a package executable from your project.
+tsc → TypeScript Compiler.
+--noEmit → tells TypeScript not to create output files.
+
+So it performs a type-check only.
 
 
 

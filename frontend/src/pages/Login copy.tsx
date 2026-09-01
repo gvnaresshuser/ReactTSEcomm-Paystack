@@ -118,40 +118,59 @@ const Login = () => {
             HEADER
         ==================================== */}
 
-        <div className="mb-6 w-full text-center text-white">
-          {/* Logo + Brand */}
-          {/* Rotating Globe */}
-          <div className="flex items-center justify-center [perspective:600px]">
-            <img
-              src={globe}
-              alt="Deblessco Globe"
-              className="h-16 w-16 object-contain animate-[globeSpin_8s_linear_infinite]"
+        {/*   <div className="mb-6 text-center text-white">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-xl">
+            <ShoppingBag
+              size={30}
+              strokeWidth={2}
+              className="text-purple-600"
             />
           </div>
 
-          {/* Brand */}
-          <div className="text-center leading-tight">
-            {/* DEBLESSCO */}
-            <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-xl font-extrabold text-transparent sm:text-2xl">
-              DEBLESSCO
-            </h1>
+          <h1 className="mt-4 text-3xl font-bold sm:text-4xl">Welcome Back!</h1>
 
-            {/* LOGISTICS */}
-            <div className="flex items-center justify-center gap-2">
-              <span className="h-px w-7 bg-amber-400 sm:w-9" />
-
-              <span className="text-[9px] font-semibold tracking-[0.18em] text-amber-400 sm:text-[10px]">
-                LOGISTICS
-              </span>
-
-              <span className="h-px w-7 bg-amber-400 sm:w-9" />
+          <p className="mt-2 text-sm text-blue-50 sm:text-base">
+            Login to continue your shopping journey
+          </p>
+        </div> */}
+        <div className="mb-6 text-center text-white">
+          {/* Logo + Brand */}
+          <div className="flex items-center justify-center gap-3">
+            {/* Rotating Globe */}
+            <div className="[perspective:600px]">
+              <img
+                src={globe}
+                alt="Deblessco Globe"
+                className="h-16 w-16 object-contain animate-[globeSpin_8s_linear_infinite]"
+              />
             </div>
 
-            {/* Tagline */}
-            <p className="text-[9px] font-medium tracking-wider text-slate-300 sm:text-[10px]">
-              Your Gateway to Global Trade
-            </p>
+            {/* Brand */}
+            <div className="leading-tight text-center">
+              {/* DEBLESSCO */}
+              <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-xl font-extrabold text-transparent sm:text-2xl">
+                DEBLESSCO
+              </h1>
+
+              {/* LOGISTICS */}
+              <div className="flex items-center justify-center gap-2">
+                <span className="h-px w-7 bg-amber-400 sm:w-9" />
+
+                <span className="text-[9px] font-semibold tracking-[0.18em] text-amber-400 sm:text-[10px]">
+                  LOGISTICS
+                </span>
+
+                <span className="h-px w-7 bg-amber-400 sm:w-9" />
+              </div>
+
+              {/* Tagline */}
+              <p className="text-[9px] font-medium tracking-wider text-slate-300 sm:text-[10px]">
+                Your Gateway to Global Trade
+              </p>
+            </div>
           </div>
+
+         
         </div>
 
         {/* ====================================
@@ -383,26 +402,10 @@ const Login = () => {
             FOOTER
         ==================================== */}
 
-        {/*  <div className="mt-5 flex items-center justify-center gap-2 text-xs font-medium text-white/80">
+        <div className="mt-5 flex items-center justify-center gap-2 text-xs font-medium text-white/80">
           <span>🔒</span>
 
           <span>Secure & simple shopping experience</span>
-        </div> */}
-        {/* ================= HOME LINK ================= */}
-
-        <div className="mt-5 text-center">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-semibold text-white shadow-md backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/25"
-          >
-            <span>←</span>
-            Back to Home
-          </Link>
-
-          <div className="mt-4 flex items-center justify-center gap-2 text-xs font-medium text-white/80">
-            <span>🔒</span>
-            <span>Secure & simple shopping experience</span>
-          </div>
         </div>
       </div>
     </main>

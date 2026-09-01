@@ -16,6 +16,7 @@ import partnerDeliveryRoutes from "./routes/partnerDeliveryRoutes.js";
 import partnerTrackingRoutes
   from "./routes/partnerTrackingRoutes.js";
 import geocodeRoutes from "./routes/geocode.routes.js";
+import quoteRequestRoutes from "./routes/quoteRequestRoutes.js";
 const app = express();
 
 //--------------------
@@ -88,7 +89,7 @@ app.use(
   partnerTrackingRoutes,
 );
 app.use("/api/geocode", geocodeRoutes);
-
+app.use("/api/quote-requests", quoteRequestRoutes);
 
 
 // Test route

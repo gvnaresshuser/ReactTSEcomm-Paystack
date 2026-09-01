@@ -22,6 +22,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminDeliveryPartners from "./pages/admin/AdminDeliveryPartners";
 import AdminDeliveryPartnerForm from "./pages/admin/AdminDeliveryPartnerForm";
+import AdminQuotes from "./pages/admin/AdminQuotes";
 import PartnerLogin from "./pages/partner/PartnerLogin";
 import PartnerLayout from "./pages/partner/PartnerLayout";
 import PartnerDashboard from "./pages/partner/PartnerDashboard";
@@ -30,6 +31,8 @@ import PartnerDeliveries from "./pages/partner/PartnerDeliveries";
 import PartnerLiveTracking from "./pages/partner/PartnerLiveTracking";
 //import LiveOrderTracking from "./pages/LiveOrderTracking";
 import TrackOrder from "./pages/TrackOrder";
+import ScrollToTop from "./components/ScrollToTop";
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -39,6 +42,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* ==================== PUBLIC ==================== */}
         <Route path="/login" element={<Login />} />
@@ -82,6 +86,7 @@ function App() {
               path="delivery-partners/:id/edit"
               element={<AdminDeliveryPartnerForm />}
             />
+            <Route path="quotes" element={<AdminQuotes />} />
           </Route>
         </Route>
         {/* ==================== PARTNER ==================== */}

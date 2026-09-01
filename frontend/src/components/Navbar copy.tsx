@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import globe from "../assets/globe.png";
-import './Navbar.css';
+
 import {
   Home,
   Package,
@@ -172,40 +171,31 @@ const Navbar = () => {
           to="/"
           end
           onClick={() => setMenuOpen(false)}
-          className="group flex items-center gap-2 sm:gap-3"
+          className="group flex items-center gap-3"
         >
-          {/* Rotating Globe */}
-          <div className="flex items-center [perspective:500px]">
-            <img
-              src={globe}
-              alt="Deblessco Globe"
-              className="h-14 w-14 object-contain animate-[rotateY_8s_linear_infinite] sm:h-16 sm:w-16"
-            />
+          {/* LOGO ICON */}
+
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg transition-transform duration-200 group-hover:scale-105">
+            <ShoppingCart size={21} strokeWidth={2.5} className="text-white" />
           </div>
 
           {/* BRAND NAME */}
-          <div className="leading-tight text-center">
-            {/* DEBLESSCO */}
-            <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-base font-extrabold text-transparent sm:text-xl">
-              DEBLESSCO
+
+          <div className="hidden sm:block">
+            <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-lg font-extrabold text-transparent sm:text-xl">
+              React TS E-Commerce
             </h1>
 
-            {/* LOGISTICS with lines */}
-            <div className="flex items-center justify-center gap-1 sm:gap-2">
-              <span className="h-px w-5 bg-amber-400 sm:w-8" />
-
-              <span className="text-[8px] font-semibold tracking-[0.15em] text-amber-400 sm:text-[10px] sm:tracking-[0.18em]">
-                LOGISTICS
-              </span>
-
-              <span className="h-px w-5 bg-amber-400 sm:w-8" />
-            </div>
-
-            {/* TAGLINE */}
-            <p className="text-[8px] font-medium tracking-wide text-slate-500 sm:text-[10px] sm:tracking-wider">
-              Your Gateway to Global Trade
+            <p className="text-[10px] font-medium tracking-wider text-slate-500">
+              SHOP • DISCOVER • ENJOY
             </p>
           </div>
+
+          {/* MOBILE BRAND */}
+
+          <span className="text-lg font-extrabold sm:hidden">
+            React TS E-Commerce
+          </span>
         </NavLink>
 
         {/* ====================================
