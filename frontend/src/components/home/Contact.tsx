@@ -57,41 +57,40 @@ export default function Contact() {
     try {
       setLoading(true);
 
-     const response = await fetch(
-       `${import.meta.env.VITE_API_URL}/api/quote-requests`,
-       {
-         method: "POST",
-         headers: {
-           "Content-Type": "application/json",
-         },
-         body: JSON.stringify({
-           name: form.name,
-           email: form.email,
-           phone: form.phone,
-           company: form.company,
-           service: form.service,
-           shipping: form.shipping,
-           shipment_size: form.size,
-           message: form.message,
-         }),
-       },
-     );
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/quote-requests`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            company: form.company,
+            service: form.service,
+            shipping: form.shipping,
+            shipment_size: form.size,
+            message: form.message,
+          }),
+        },
+      );
 
-     const data = await response.json();
+      const data = await response.json();
 
-     if (!response.ok) {
-       throw new Error(data.message || "Failed to submit quote request");
-     }
-
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to submit quote request");
+      }
 
       // =========================================
       // SUCCESS
       // =========================================
 
-  await Swal.fire({
-    icon: "success",
-    title: "Quote Request Sent!",
-    html: `
+      await Swal.fire({
+        icon: "success",
+        title: "Quote Request Sent!",
+        html: `
     <div style="
       margin-top: 10px;
       font-size: 15px;
@@ -127,18 +126,18 @@ export default function Contact() {
       </strong>
     </div>
   `,
-    confirmButtonText: "Continue",
-    confirmButtonColor: "#0F2347",
-    background: "#ffffff",
-    color: "#0F2347",
-    width: "440px",
-    padding: "2rem",
-    customClass: {
-      popup: "rounded-3xl shadow-2xl",
-      title: "font-extrabold",
-      confirmButton: "rounded-xl px-7 py-3 font-bold",
-    },
-  });
+        confirmButtonText: "Continue",
+        confirmButtonColor: "#0F2347",
+        background: "#ffffff",
+        color: "#0F2347",
+        width: "440px",
+        padding: "2rem",
+        customClass: {
+          popup: "rounded-3xl shadow-2xl",
+          title: "font-extrabold",
+          confirmButton: "rounded-xl px-7 py-3 font-bold",
+        },
+      });
 
       // Clear form
       setForm(initialForm);
@@ -172,8 +171,11 @@ export default function Contact() {
     "w-full rounded-2xl border-2 border-slate-200 px-5 py-4 outline-none transition duration-300 focus:border-[#FFC107] focus:ring-4 focus:ring-yellow-100";
 
   return (
-    <section id="contact" className="bg-slate-50 py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section
+      id="contact"
+      className="scroll-mt-24 bg-slate-50 py-2 sm:py-8 lg:py-6"
+    >
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* =========================================
             SECTION HEADER
         ========================================== */}
@@ -183,11 +185,11 @@ export default function Contact() {
             Contact Us
           </p>
 
-          <h2 className="mt-3 text-4xl font-bold text-[#0F2347] lg:text-5xl">
+          <h2 className="mt-3 text-3xl font-bold leading-tight text-[#0F2347] sm:text-4xl lg:text-5xl">
             Let&apos;s Discuss Your Shipping Needs
           </h2>
 
-          <p className="mx-auto mt-5 max-w-3xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:mt-5 sm:text-lg">
             Need help sourcing products from China or shipping to Ghana? Send us
             your request and our logistics specialists will respond within 24
             hours.
@@ -206,8 +208,8 @@ export default function Contact() {
           <div className="space-y-6">
             {/* PHONE */}
 
-            <div className="flex gap-5 rounded-3xl bg-white p-6 shadow-md">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#FFC107]">
+            <div className="flex w-full gap-4 rounded-3xl bg-white p-5 shadow-md sm:gap-5 sm:p-6">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#FFC107] sm:h-16 sm:w-16">
                 <Phone className="text-[#0F2347]" size={30} />
               </div>
 
@@ -297,8 +299,8 @@ export default function Contact() {
               RIGHT SIDE - QUOTE FORM
           ========================================== */}
 
-          <div className="rounded-3xl bg-white p-8 shadow-xl">
-            <h3 className="text-4xl font-bold text-[#0F2347]">
+          <div className="w-full rounded-3xl bg-white p-5 shadow-xl sm:p-8">
+            <h3 className="text-3xl font-bold leading-tight text-[#0F2347] sm:text-4xl">
               Request a Free Quote
             </h3>
 

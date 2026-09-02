@@ -59,7 +59,7 @@ const stats = [
 
 export default function HowItWorks() {
   return (
-    <section id="process" className="bg-white py-24">
+    <section id="process" className="scroll-mt-24 bg-white py-6">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center">
           <span className="rounded-full bg-yellow-100 px-5 py-2 text-sm font-semibold text-yellow-700">

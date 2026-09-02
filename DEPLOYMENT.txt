@@ -381,8 +381,60 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
 
+Microsoft Windows [Version 10.0.26100.8246]
+(c) Microsoft Corporation. All rights reserved.
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npx tsc --noEmit
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npm run build
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+src/pages/admin/AdminQuotes.tsx:5:3 - error TS6133: 'Eye' is declared but its value is never read.
+
+5   Eye,
+    ~~~
+
+src/pages/admin/AdminQuotes.tsx:6:3 - error TS6133: 'Mail' is declared but its value is never read.
+
+6   Mail,
+    ~~~~
+
+src/pages/admin/AdminQuotes.tsx:7:3 - error TS6133: 'Phone' is declared but its value is never read.
+
+7   Phone,
+    ~~~~~
+
+src/pages/admin/AdminQuotes.tsx:8:3 - error TS6133: 'Building2' is declared but its value is never read.
+
+8   Building2,
+    ~~~~~~~~~
+
+src/pages/admin/AdminQuotes.tsx:83:9 - error TS6133: 'handleViewQuote' is declared but its value is never read.
+
+83   const handleViewQuote = (quote: Quote) => {
+           ~~~~~~~~~~~~~~~
+
+
+Found 5 errors.
+
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npm run dev
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v8.2.2  ready in 22818 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>cd ..
+
 E:\Jose\ReactTSEcomm-Paystack>git add .
-warning: in the working copy of 'frontend/src/App.tsx', LF will be replaced by CRLF the next time Git touches it
 
 E:\Jose\ReactTSEcomm-Paystack>git status
 On branch main
@@ -391,70 +443,29 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        new file:   ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER.zip
-        new file:   backend.zip
-        modified:   backend/src/app.ts
-        new file:   backend/src/controllers/quoteRequestController.ts
-        new file:   backend/src/models/quoteRequestModel.ts
-        new file:   backend/src/routes/quoteRequestRoutes.ts
-        new file:   frontend.zip
-        modified:   frontend/src/App.tsx
-        new file:   frontend/src/assets/globe.png
-        new file:   frontend/src/components/Navbar copy 2.tsx
-        new file:   frontend/src/components/Navbar copy.tsx
-        new file:   frontend/src/components/Navbar.css
-        modified:   frontend/src/components/Navbar.tsx
-        new file:   frontend/src/components/ScrollToTop.tsx
-        new file:   frontend/src/components/home/Contact copy.tsx
-        new file:   frontend/src/components/home/Contact.tsx
-        new file:   frontend/src/components/home/Hero.tsx
-        new file:   frontend/src/components/home/HowItWorks.tsx
-        new file:   frontend/src/components/home/Navbar.tsx
-        new file:   frontend/src/components/home/Services.tsx
-        new file:   frontend/src/components/home/WhyChooseUs.tsx
-        new file:   frontend/src/pages/Home copy.tsx
-        modified:   frontend/src/pages/Home.tsx
-        new file:   frontend/src/pages/Login copy.tsx
-        modified:   frontend/src/pages/Login.tsx
-        modified:   frontend/src/pages/admin/AdminLayout.tsx
-        new file:   frontend/src/pages/admin/AdminQuotes.tsx
+        new file:   ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER-QUOTES.zip
+        modified:   backend.zip
+        modified:   frontend.zip
+        new file:   frontend/src/pages/admin/AdminQuotes copy.tsx
+        modified:   frontend/src/pages/admin/AdminQuotes.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "Landing Page & Quotes"
-[main f84943e] Landing Page & Quotes
- 28 files changed, 4523 insertions(+), 217 deletions(-)
- create mode 100644 ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER.zip
- create mode 100644 backend.zip
- create mode 100644 backend/src/controllers/quoteRequestController.ts
- create mode 100644 backend/src/models/quoteRequestModel.ts
- create mode 100644 backend/src/routes/quoteRequestRoutes.ts
- create mode 100644 frontend.zip
- create mode 100644 frontend/src/assets/globe.png
- create mode 100644 frontend/src/components/Navbar copy 2.tsx
- create mode 100644 frontend/src/components/Navbar copy.tsx
- create mode 100644 frontend/src/components/Navbar.css
- create mode 100644 frontend/src/components/ScrollToTop.tsx
- create mode 100644 frontend/src/components/home/Contact copy.tsx
- create mode 100644 frontend/src/components/home/Contact.tsx
- create mode 100644 frontend/src/components/home/Hero.tsx
- create mode 100644 frontend/src/components/home/HowItWorks.tsx
- create mode 100644 frontend/src/components/home/Navbar.tsx
- create mode 100644 frontend/src/components/home/Services.tsx
- create mode 100644 frontend/src/components/home/WhyChooseUs.tsx
- create mode 100644 frontend/src/pages/Home copy.tsx
- create mode 100644 frontend/src/pages/Login copy.tsx
- create mode 100644 frontend/src/pages/admin/AdminQuotes.tsx
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "quotes adjusted for mobile view"
+[main 6dc59ce] quotes adjusted for mobile view
+ 6 files changed, 1123 insertions(+), 256 deletions(-)
+ create mode 100644 ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER-QUOTES.zip
+ create mode 100644 frontend/src/pages/admin/AdminQuotes copy.tsx
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 58, done.
-Counting objects: 100% (58/58), done.
+Enumerating objects: 20, done.
+Counting objects: 100% (20/20), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (40/40), done.
-Writing objects: 100% (40/40), 12.50 MiB | 964.00 KiB/s, done.
-Total 40 (delta 15), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (15/15), completed with 14 local objects.
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (11/11), 24.97 MiB | 1.04 MiB/s, done.
+Total 11 (delta 8), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   a90f22a..f84943e  main -> main
+   f84943e..6dc59ce  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 
