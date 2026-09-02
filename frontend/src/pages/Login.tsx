@@ -132,7 +132,16 @@ const Login = () => {
           {/* Brand */}
           <div className="text-center leading-tight">
             {/* DEBLESSCO */}
-            <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-xl font-extrabold text-transparent sm:text-2xl">
+            {/* <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-xl font-extrabold text-transparent sm:text-2xl">
+              DEBLESSCO
+            </h1> */}
+            {/*  <h1 className="text-xl font-extrabold tracking-wide text-white sm:text-2xl">
+              DEBLESSCO
+            </h1> */}
+            {/* <h1 className="bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-xl font-extrabold tracking-wide text-transparent drop-shadow-md sm:text-2xl">
+              DEBLESSCO
+            </h1> */}
+            <h1 className="bg-gradient-to-r from-cyan-200 via-white to-blue-200 bg-clip-text text-xl font-extrabold tracking-wide text-transparent drop-shadow-md sm:text-2xl">
               DEBLESSCO
             </h1>
 

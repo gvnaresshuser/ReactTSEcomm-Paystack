@@ -384,56 +384,6 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 Microsoft Windows [Version 10.0.26100.8246]
 (c) Microsoft Corporation. All rights reserved.
 
-E:\Jose\ReactTSEcomm-Paystack\frontend>npx tsc --noEmit
-
-E:\Jose\ReactTSEcomm-Paystack\frontend>npm run build
-
-> frontend@0.0.0 build
-> tsc -b && vite build
-
-src/pages/admin/AdminQuotes.tsx:5:3 - error TS6133: 'Eye' is declared but its value is never read.
-
-5   Eye,
-    ~~~
-
-src/pages/admin/AdminQuotes.tsx:6:3 - error TS6133: 'Mail' is declared but its value is never read.
-
-6   Mail,
-    ~~~~
-
-src/pages/admin/AdminQuotes.tsx:7:3 - error TS6133: 'Phone' is declared but its value is never read.
-
-7   Phone,
-    ~~~~~
-
-src/pages/admin/AdminQuotes.tsx:8:3 - error TS6133: 'Building2' is declared but its value is never read.
-
-8   Building2,
-    ~~~~~~~~~
-
-src/pages/admin/AdminQuotes.tsx:83:9 - error TS6133: 'handleViewQuote' is declared but its value is never read.
-
-83   const handleViewQuote = (quote: Quote) => {
-           ~~~~~~~~~~~~~~~
-
-
-Found 5 errors.
-
-
-E:\Jose\ReactTSEcomm-Paystack\frontend>npm run dev
-
-> frontend@0.0.0 dev
-> vite
-
-
-  VITE v8.2.2  ready in 22818 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
-
-E:\Jose\ReactTSEcomm-Paystack\frontend>cd ..
-
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
 E:\Jose\ReactTSEcomm-Paystack>git status
@@ -443,29 +393,52 @@ Your branch is up to date with 'origin/main'.
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
         modified:   DEPLOYMENT.txt
-        new file:   ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER-QUOTES.zip
+        modified:   ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER-QUOTES.zip
         modified:   backend.zip
+        new file:   components-home/Contact copy.tsx
+        new file:   components-home/Contact.tsx
+        new file:   components-home/Hero.tsx
+        new file:   components-home/HowItWorks.tsx
+        new file:   components-home/Navbar.tsx
+        new file:   components-home/Services.tsx
+        new file:   components-home/WhyChooseUs.tsx
         modified:   frontend.zip
-        new file:   frontend/src/pages/admin/AdminQuotes copy.tsx
-        modified:   frontend/src/pages/admin/AdminQuotes.tsx
+        new file:   frontend/public/images/logistics/why-choose-us.jpg
+        new file:   frontend/public/logo/deblessco-logo-v2.png
+        modified:   frontend/src/components/ScrollToTop.tsx
+        new file:   frontend/src/components/home/Contact copy 2.tsx
+        new file:   frontend/src/components/home/Contact copy 3.tsx
+        modified:   frontend/src/components/home/Contact.tsx
+        modified:   frontend/src/components/home/HowItWorks.tsx
+        modified:   frontend/src/components/home/Services.tsx
+        modified:   frontend/src/components/home/WhyChooseUs.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "quotes adjusted for mobile view"
-[main 6dc59ce] quotes adjusted for mobile view
- 6 files changed, 1123 insertions(+), 256 deletions(-)
- create mode 100644 ReactTSEcomm-Paystack-01-09-2026-TRACK-ORDER-QUOTES.zip
- create mode 100644 frontend/src/pages/admin/AdminQuotes copy.tsx
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "02-09-2026"
+[main 51989d5] 02-09-2026
+ 20 files changed, 2495 insertions(+), 115 deletions(-)
+ create mode 100644 components-home/Contact copy.tsx
+ create mode 100644 components-home/Contact.tsx
+ create mode 100644 components-home/Hero.tsx
+ create mode 100644 components-home/HowItWorks.tsx
+ create mode 100644 components-home/Navbar.tsx
+ create mode 100644 components-home/Services.tsx
+ create mode 100644 components-home/WhyChooseUs.tsx
+ create mode 100644 frontend/public/images/logistics/why-choose-us.jpg
+ create mode 100644 frontend/public/logo/deblessco-logo-v2.png
+ create mode 100644 frontend/src/components/home/Contact copy 2.tsx
+ create mode 100644 frontend/src/components/home/Contact copy 3.tsx
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 20, done.
-Counting objects: 100% (20/20), done.
+Enumerating objects: 37, done.
+Counting objects: 100% (37/37), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (11/11), done.
-Writing objects: 100% (11/11), 24.97 MiB | 1.04 MiB/s, done.
-Total 11 (delta 8), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
+Compressing objects: 100% (19/19), done.
+Writing objects: 100% (22/22), 54.62 MiB | 1.11 MiB/s, done.
+Total 22 (delta 13), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (13/13), completed with 12 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   f84943e..6dc59ce  main -> main
+   6dc59ce..51989d5  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 
