@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const scrollToSection = (id:any) => {
+  const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
 
     if (section) {
@@ -137,16 +137,6 @@ export default function Navbar() {
       {menuOpen && (
         <div className="border-t border-slate-200 bg-white px-5 py-6 shadow-xl lg:hidden">
           <div className="mx-auto max-w-7xl space-y-2">
-            {/*  {navLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={closeMenu}
-                className="block rounded-xl px-4 py-3.5 text-lg font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0057D9]"
-              >
-                {item.name}
-              </a>
-            ))} */}
             {navLinks.map((item) => (
               <a
                 key={item.name}
@@ -174,7 +164,10 @@ export default function Navbar() {
 
             <a
               href="#contact"
-              onClick={closeMenu}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("contact");
+              }}
               className="mt-5 block rounded-full bg-[#0B1F3A] py-4 text-center font-semibold text-white transition hover:bg-[#0057D9]"
             >
               Request Quote
