@@ -299,7 +299,7 @@ export default function Contact() {
               RIGHT SIDE - QUOTE FORM
           ========================================== */}
 
-          <div className="w-full rounded-3xl bg-white p-5 shadow-xl sm:p-8">
+          <div className="mx-auto w-full rounded-3xl bg-white p-5 shadow-xl sm:p-8">
             <h3 className="text-3xl font-bold leading-tight text-[#0F2347] sm:text-4xl">
               Request a Free Quote
             </h3>
@@ -309,7 +309,11 @@ export default function Contact() {
               and shipping solution for you.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            {/* <form onSubmit={handleSubmit} className="mt-8 space-y-5"> */}
+            <form
+              onSubmit={handleSubmit}
+              className="mx-auto mt-8 w-full max-w-xl space-y-5"
+            >
               {/* NAME */}
 
               <input

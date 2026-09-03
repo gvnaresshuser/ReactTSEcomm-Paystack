@@ -583,6 +583,36 @@ E:\Jose\ReactTSEcomm-Paystack>
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
+E:\Jose\ReactTSEcomm-Paystack>git add .
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   frontend/src/components/home/Navbar.tsx
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "scrolling 03-09-2026"
+[main 0b26e07] scrolling 03-09-2026
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+E:\Jose\ReactTSEcomm-Paystack>git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 577 bytes | 288.00 KiB/s, done.
+Total 7 (delta 6), reused 0 (delta 0), pack-reused 0
+To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
+   03e358b..0b26e07  main -> main
+
+E:\Jose\ReactTSEcomm-Paystack>
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
 https://react-ts-ecomm-paystack-frontend.vercel.app/
 
 
