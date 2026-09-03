@@ -176,6 +176,218 @@ export const getOrdersByUser = async (userId: string) => {
   return orders;
 };
 
+// =====================================================
+// GET USER ORDERS - PAGINATED
+// =====================================================
+//
+// This function is designed for the Orders.tsx page.
+//
+// IMPORTANT:
+// We do NOT load all orders.
+//
+// Example:
+//
+// Database → 1,00,000 orders
+//              ↓
+//         PostgreSQL
+//              ↓
+//        LIMIT 10
+//              ↓
+// React → only 10 orders
+//
+// Search and date filtering are also performed
+// inside PostgreSQL.
+// =====================================================
+
+export const getPaginatedOrdersByUser = async (
+  userId: string,
+  page: number,
+  limit: number,
+  search: string,
+  fromDateTime: string,
+  toDateTime: string,
+) => {
+  // -----------------------------------------------
+  // CALCULATE OFFSET
+  // -----------------------------------------------
+
+  const offset = (page - 1) * limit;
+
+  // -----------------------------------------------
+  // BUILD WHERE CONDITIONS
+  // -----------------------------------------------
+
+  const conditions: string[] = [
+    "user_id = $1",
+  ];
+
+  const values: any[] = [userId];
+
+  let parameterIndex = 2;
+
+  // -----------------------------------------------
+  // SEARCH
+  // -----------------------------------------------
+  //
+  // Search:
+  // - Order ID
+  // - Order status
+  // - Payment status
+  //
+  // Example:
+  //
+  // search = "delivered"
+  //
+  // PostgreSQL checks:
+  //
+  // status
+  // payment_status
+  // order id
+  //
+  // -----------------------------------------------
+
+  if (search.trim()) {
+    conditions.push(`
+      (
+        id::text ILIKE $${parameterIndex}
+        OR status ILIKE $${parameterIndex}
+        OR payment_status ILIKE $${parameterIndex}
+      )
+    `);
+
+    values.push(`%${search.trim()}%`);
+
+    parameterIndex++;
+  }
+
+  // -----------------------------------------------
+  // FROM DATE/TIME
+  // -----------------------------------------------
+
+  if (fromDateTime) {
+    conditions.push(
+      `created_at >= $${parameterIndex}`,
+    );
+
+    values.push(fromDateTime);
+
+    parameterIndex++;
+  }
+
+  // -----------------------------------------------
+  // TO DATE/TIME
+  // -----------------------------------------------
+  //
+  // datetime-local gives:
+  //
+  // 2026-09-03T18:30
+  //
+  // We add one minute so the selected minute
+  // is included.
+  //
+  // PostgreSQL:
+  //
+  // 18:30:00
+  // through
+  // 18:30:59.999...
+  //
+  // -----------------------------------------------
+
+  if (toDateTime) {
+    conditions.push(
+      `created_at < ($${parameterIndex}::timestamp + INTERVAL '1 minute')`,
+    );
+
+    values.push(toDateTime);
+
+    parameterIndex++;
+  }
+
+  const whereClause = conditions.join(" AND ");
+
+  // -----------------------------------------------
+  // TOTAL COUNT
+  // -----------------------------------------------
+  //
+  // IMPORTANT:
+  //
+  // We need the total number of matching orders
+  // so React can calculate:
+  //
+  // Page 1 of 12543
+  //
+  // We only return the COUNT, not the orders.
+  //
+  // -----------------------------------------------
+
+  const countResult = await pool.query(
+    `
+    SELECT COUNT(*)::int AS total_orders
+    FROM orders
+    WHERE ${whereClause}
+    `,
+    values,
+  );
+
+  const totalOrders = countResult.rows[0].total_orders;
+
+  // -----------------------------------------------
+  // FETCH CURRENT PAGE
+  // -----------------------------------------------
+  //
+  // We deliberately do NOT fetch order_items here.
+  //
+  // Orders.tsx doesn't need them.
+  //
+  // This query returns only the records required
+  // for the current page.
+  //
+  // -----------------------------------------------
+
+  const ordersResult = await pool.query(
+    `
+    SELECT
+      id,
+      user_id,
+      total_amount,
+      status,
+      payment_status,
+      payment_method,
+      paystack_reference,
+      created_at,
+      updated_at
+    FROM orders
+    WHERE ${whereClause}
+    ORDER BY created_at DESC, id DESC
+    LIMIT $${parameterIndex}
+    OFFSET $${parameterIndex + 1}
+    `,
+    [
+      ...values,
+      limit,
+      offset,
+    ],
+  );
+
+  // -----------------------------------------------
+  // TOTAL PAGES
+  // -----------------------------------------------
+
+  const totalPages =
+    Math.ceil(totalOrders / limit);
+
+  return {
+    orders: ordersResult.rows,
+
+    pagination: {
+      page,
+      limit,
+      totalOrders,
+      totalPages,
+    },
+  };
+};
+
 
 // =====================================================
 // GET SINGLE ORDER

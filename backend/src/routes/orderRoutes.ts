@@ -3,6 +3,7 @@ import express from "express";
 import {
     createOrder,
     getOrders,
+    getPaginatedOrders,
     getOrder,
     getAllOrdersAdmin,
     updateStatus
@@ -24,6 +25,8 @@ router.get(
     authMiddleware,
     getOrders
 );
+
+router.get( "/paginated", authMiddleware, getPaginatedOrders, );
 
 router.get(
     "/admin/all",

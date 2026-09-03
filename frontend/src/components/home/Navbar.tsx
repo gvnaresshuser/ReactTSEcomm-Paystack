@@ -16,6 +16,19 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const scrollToSection = (id:any) => {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+
+    closeMenu();
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-lg">
       <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-4 sm:px-8 lg:h-26 lg:px-10">
@@ -65,6 +78,12 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+
+                const id = item.href.replace("#", "");
+                scrollToSection(id);
+              }}
               className="relative text-[15px] font-semibold tracking-wide text-slate-700 transition-all duration-300 hover:text-[#0057D9] after:absolute after:bottom-[-6px] after:left-0 after:h-[2px] after:w-0 after:bg-[#0057D9] after:transition-all after:duration-300 hover:after:w-full"
             >
               {item.name}
@@ -91,6 +110,10 @@ export default function Navbar() {
 
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("contact");
+            }}
             className="rounded-full bg-[#0B1F3A] px-8 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-[#0057D9]"
           >
             Request Quote

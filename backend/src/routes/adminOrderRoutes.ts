@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import {
   getAdminOrders,
+  getPaginatedAdminOrders,
   getAdminOrder,
   updateAdminOrderStatus,
   assignAdminDeliveryPartner,
@@ -16,6 +17,11 @@ const router = Router();
 router.use(authMiddleware, adminMiddleware);
 
 router.get("/", getAdminOrders);
+
+router.get(
+  "/paginated",
+  getPaginatedAdminOrders,
+);
 
 router.get("/:id", getAdminOrder);
 

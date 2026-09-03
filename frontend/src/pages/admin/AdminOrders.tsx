@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { LoaderCircle, Search, Calendar, X } from "lucide-react";
+import {
+  Package,  
+  LoaderCircle,
+  Search,
+  Calendar,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import Swal from "sweetalert2";
+
 interface DeliveryPartner {
   id: string;
   full_name: string;
   phone: string;
   status: "active" | "inactive";
 }
+
 interface Order {
   id: string;
   user_name: string;
@@ -20,6 +30,13 @@ interface Order {
   delivery_partner_id: string | null;
   delivery_partner_name: string | null;
   delivery_partner_phone: string | null;
+}
+
+interface Pagination {
+  page: number;
+  limit: number;
+  totalOrders: number;
+  totalPages: number;
 }
 
 const statuses = [
@@ -58,14 +75,37 @@ const getPaymentStyle = (status: string) => {
 const AdminOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [partners, setPartners] = useState<DeliveryPartner[]>([]);
 
+  const [partners, setPartners] = useState<DeliveryPartner[]>([]);
   const [assigningOrderId, setAssigningOrderId] = useState<string | null>(null);
 
-  // Search + Date/Time filters
+  // ============================================================
+  // SEARCH + DATE/TIME FILTERS
+  // ============================================================
+
   const [search, setSearch] = useState("");
   const [fromDateTime, setFromDateTime] = useState("");
   const [toDateTime, setToDateTime] = useState("");
+
+  // ============================================================
+  // PAGINATION
+  // ============================================================
+
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
+
+  const [pagination, setPagination] = useState<Pagination>({
+    page: 1,
+    limit: 10,
+    totalOrders: 0,
+    totalPages: 0,
+  });
+  // Total number of orders across all pages
+  const totalOrders = pagination.totalOrders;
+
+  // ============================================================
+  // FETCH DELIVERY PARTNERS
+  // ============================================================
 
   const fetchPartners = async () => {
     try {
@@ -81,10 +121,27 @@ const AdminOrders = () => {
     }
   };
 
+  // ============================================================
+  // FETCH PAGINATED ORDERS
+  // ============================================================
+
   const fetchOrders = async () => {
     try {
-      const response = await api.get("/api/admin/orders");
+      setLoading(true);
+
+      const response = await api.get("/api/admin/orders/paginated", {
+        params: {
+          page,
+          limit,
+          search: search.trim(),
+          fromDateTime,
+          toDateTime,
+        },
+      });
+
       setOrders(response.data.orders);
+
+      setPagination(response.data.pagination);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
     } finally {
@@ -92,19 +149,42 @@ const AdminOrders = () => {
     }
   };
 
+  // ============================================================
+  // INITIAL LOAD + WHEN PAGE/FILTERS CHANGE
+  // ============================================================
+
   useEffect(() => {
     fetchOrders();
+  }, [page, search, fromDateTime, toDateTime]);
+
+  // ============================================================
+  // FETCH PARTNERS ONCE
+  // ============================================================
+
+  useEffect(() => {
     fetchPartners();
   }, []);
 
+  // ============================================================
+  // UPDATE ORDER STATUS
+  // ============================================================
+
   const updateStatus = async (id: string, status: string) => {
     try {
-      await api.put(`/api/admin/orders/${id}/status`, { status });
-      fetchOrders();
+      await api.put(`/api/admin/orders/${id}/status`, {
+        status,
+      });
+
+      // Refresh current page
+      await fetchOrders();
     } catch (error) {
       console.error("Failed to update status:", error);
     }
   };
+
+  // ============================================================
+  // ASSIGN DELIVERY PARTNER
+  // ============================================================
 
   const handleAssignPartner = async (orderId: string, partnerId: string) => {
     if (!partnerId) return;
@@ -118,6 +198,7 @@ const AdminOrders = () => {
 
       const partner = partners.find((item) => item.id === partnerId);
 
+      // Update current page locally
       setOrders((current) =>
         current.map((order) =>
           order.id === orderId
@@ -134,7 +215,9 @@ const AdminOrders = () => {
       await Swal.fire({
         icon: "success",
         title: "Partner Assigned!",
-        text: `${partner?.full_name || "Delivery partner"} has been assigned successfully.`,
+        text: `${
+          partner?.full_name || "Delivery partner"
+        } has been assigned successfully.`,
 
         toast: true,
         position: "top-end",
@@ -181,48 +264,56 @@ const AdminOrders = () => {
     }
   };
 
-  // FILTER ORDERS
-  const filteredOrders = orders.filter((order) => {
-    const searchText = search.toLowerCase().trim();
+  // ============================================================
+  // FILTER HANDLING
+  // ============================================================
 
-    // -------------------------
-    // TEXT SEARCH
-    // -------------------------
-    const matchesSearch =
-      !searchText ||
-      order.user_name.toLowerCase().includes(searchText) ||
-      order.user_email.toLowerCase().includes(searchText) ||
-      order.id.toLowerCase().includes(searchText) ||
-      order.status.toLowerCase().includes(searchText) ||
-      order.payment_status.toLowerCase().includes(searchText);
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
 
-    // -------------------------
-    // DATE + TIME SEARCH
-    // -------------------------
-    const orderTime = new Date(order.created_at).getTime();
+  const handleFromDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFromDateTime(e.target.value);
+    setPage(1);
+  };
 
-    const fromTime = fromDateTime ? new Date(fromDateTime).getTime() : null;
-
-    const toTime = toDateTime ? new Date(toDateTime).getTime() : null;
-
-    const matchesFromDate = fromTime === null || orderTime >= fromTime;
-
-    const matchesToDate = toTime === null || orderTime <= toTime;
-
-    return matchesSearch && matchesFromDate && matchesToDate;
-  });
-
-  const hasFilters =
-    search.trim() !== "" || fromDateTime !== "" || toDateTime !== "";
+  const handleToDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setToDateTime(e.target.value);
+    setPage(1);
+  };
 
   const clearFilters = () => {
     setSearch("");
     setFromDateTime("");
     setToDateTime("");
+    setPage(1);
   };
 
+  const hasFilters =
+    search.trim() !== "" || fromDateTime !== "" || toDateTime !== "";
+
+  // ============================================================
+  // PAGINATION HANDLERS
+  // ============================================================
+
+  const goToPreviousPage = () => {
+    if (page > 1) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (page < pagination.totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  // ============================================================
   // LOADING
-  if (loading) {
+  // ============================================================
+
+  if (loading && orders.length === 0) {
     return (
       <div className="flex min-h-[calc(100vh-2rem)] w-full items-center justify-center px-4 sm:min-h-[calc(100vh-3rem)]">
         <div className="w-full max-w-sm">
@@ -265,8 +356,11 @@ const AdminOrders = () => {
   return (
     <div className="w-full">
       <div className="mx-auto max-w-7xl">
-        {/* HEADER */}
-        <div className="mb-5">
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
+
+        {/*  <div className="mb-5">
           <h1 className="text-2xl font-bold text-slate-800 sm:text-3xl">
             Admin Orders
           </h1>
@@ -274,12 +368,35 @@ const AdminOrders = () => {
           <p className="mt-1 text-sm text-slate-500">
             Manage and track customer orders
           </p>
+        </div> */}
+        <div className="mb-6">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 shadow-lg">
+              <Package size={25} className="text-white" />
+            </div>
+
+            <h1 className="text-3xl font-bold text-slate-800 sm:text-4xl">
+              Admin Orders
+            </h1>
+
+            <span className="relative -bottom-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-3 py-1 text-sm font-bold text-white shadow-md">
+              {totalOrders.toLocaleString("en-IN")}
+            </span>
+          </div>
+
+          <p className="mt-3 text-slate-600">
+            Manage and track customer orders
+          </p>
         </div>
 
-        {/* SEARCH / DATE FILTER PANEL */}
+        {/* =====================================================
+            SEARCH / DATE FILTER PANEL
+        ===================================================== */}
+
         <div className="mb-5 rounded-2xl bg-white p-4 shadow-md sm:p-5">
           <div className="grid gap-4 lg:grid-cols-3">
             {/* SEARCH */}
+
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Search Orders
@@ -294,7 +411,7 @@ const AdminOrders = () => {
                 <input
                   type="text"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={handleSearchChange}
                   placeholder="Search name, email, status..."
                   className="
                     w-full rounded-xl border border-slate-200
@@ -311,7 +428,8 @@ const AdminOrders = () => {
               </div>
             </div>
 
-            {/* FROM DATE + TIME */}
+            {/* FROM */}
+
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 From Date & Time
@@ -326,7 +444,7 @@ const AdminOrders = () => {
                 <input
                   type="datetime-local"
                   value={fromDateTime}
-                  onChange={(e) => setFromDateTime(e.target.value)}
+                  onChange={handleFromDateChange}
                   className="
                     w-full rounded-xl border border-slate-200
                     bg-slate-50 py-3 pl-10 pr-3 text-sm
@@ -341,7 +459,8 @@ const AdminOrders = () => {
               </div>
             </div>
 
-            {/* TO DATE + TIME */}
+            {/* TO */}
+
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 To Date & Time
@@ -356,7 +475,7 @@ const AdminOrders = () => {
                 <input
                   type="datetime-local"
                   value={toDateTime}
-                  onChange={(e) => setToDateTime(e.target.value)}
+                  onChange={handleToDateChange}
                   className="
                     w-full rounded-xl border border-slate-200
                     bg-slate-50 py-3 pl-10 pr-3 text-sm
@@ -373,17 +492,16 @@ const AdminOrders = () => {
           </div>
 
           {/* FILTER FOOTER */}
+
           <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-slate-500">
               Showing{" "}
-              <span className="font-bold text-blue-600">
-                {filteredOrders.length}
-              </span>{" "}
+              <span className="font-bold text-blue-600">{orders.length}</span>{" "}
               of{" "}
               <span className="font-semibold text-slate-700">
-                {orders.length}
+                {pagination.totalOrders}
               </span>{" "}
-              {orders.length === 1 ? "order" : "orders"}
+              {pagination.totalOrders === 1 ? "order" : "orders"}
             </p>
 
             {hasFilters && (
@@ -404,8 +522,11 @@ const AdminOrders = () => {
           </div>
         </div>
 
-        {/* NO RESULTS */}
-        {filteredOrders.length === 0 && (
+        {/* =====================================================
+            NO RESULTS
+        ===================================================== */}
+
+        {orders.length === 0 && (
           <div className="rounded-2xl bg-white p-10 text-center shadow-md">
             <Search size={42} className="mx-auto text-slate-300" />
 
@@ -432,10 +553,16 @@ const AdminOrders = () => {
           </div>
         )}
 
-        {/* RESULTS */}
-        {filteredOrders.length > 0 && (
+        {/* =====================================================
+            RESULTS
+        ===================================================== */}
+
+        {orders.length > 0 && (
           <>
-            {/* DESKTOP TABLE */}
+            {/* =================================================
+                DESKTOP TABLE
+            ================================================= */}
+
             <div className="hidden overflow-hidden rounded-xl bg-white shadow-md md:block">
               <table className="w-full text-left">
                 <thead className="bg-slate-800 text-white">
@@ -447,16 +574,17 @@ const AdminOrders = () => {
                     <th className="p-4">Status</th>
                     <th className="p-4">Update</th>
                     <th className="p-4">Delivery Partner</th>
-                    <th className="p-4">Update</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {filteredOrders.map((order) => (
+                  {orders.map((order) => (
                     <tr
                       key={order.id}
                       className="border-b transition hover:bg-slate-50"
                     >
+                      {/* CUSTOMER */}
+
                       <td className="p-4">
                         <p className="text-sm font-semibold text-slate-800">
                           {order.user_name}
@@ -471,13 +599,19 @@ const AdminOrders = () => {
                         </p>
                       </td>
 
+                      {/* DATE */}
+
                       <td className="p-4 text-sm text-slate-600">
                         {new Date(order.created_at).toLocaleString("en-IN")}
                       </td>
 
+                      {/* TOTAL */}
+
                       <td className="p-4 font-semibold text-slate-800">
                         ₦{Number(order.total_amount).toLocaleString("en-IN")}
                       </td>
+
+                      {/* PAYMENT */}
 
                       <td className="p-4">
                         <span
@@ -489,6 +623,8 @@ const AdminOrders = () => {
                         </span>
                       </td>
 
+                      {/* STATUS */}
+
                       <td className="p-4">
                         <span
                           className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${getStatusStyle(
@@ -498,6 +634,8 @@ const AdminOrders = () => {
                           {order.status}
                         </span>
                       </td>
+
+                      {/* UPDATE STATUS */}
 
                       <td className="p-4">
                         <select
@@ -516,6 +654,9 @@ const AdminOrders = () => {
                           ))}
                         </select>
                       </td>
+
+                      {/* DELIVERY PARTNER */}
+
                       <td className="px-4 py-4">
                         <select
                           value={order.delivery_partner_id || ""}
@@ -524,19 +665,19 @@ const AdminOrders = () => {
                             handleAssignPartner(order.id, e.target.value)
                           }
                           className="
-      w-full min-w-[190px]
-      rounded-xl border border-slate-200
-      bg-slate-50 px-3 py-2
-      text-sm font-medium text-slate-700
-      outline-none
-      transition
-      focus:border-blue-500
-      focus:bg-white
-      focus:ring-2
-      focus:ring-blue-100
-      disabled:cursor-not-allowed
-      disabled:opacity-60
-    "
+                            w-full min-w-[190px]
+                            rounded-xl border border-slate-200
+                            bg-slate-50 px-3 py-2
+                            text-sm font-medium text-slate-700
+                            outline-none
+                            transition
+                            focus:border-blue-500
+                            focus:bg-white
+                            focus:ring-2
+                            focus:ring-blue-100
+                            disabled:cursor-not-allowed
+                            disabled:opacity-60
+                          "
                         >
                           <option value="">Select Partner</option>
 
@@ -553,14 +694,18 @@ const AdminOrders = () => {
               </table>
             </div>
 
-            {/* MOBILE CARDS */}
+            {/* =================================================
+                MOBILE CARDS
+            ================================================= */}
+
             <div className="space-y-4 md:hidden">
-              {filteredOrders.map((order) => (
+              {orders.map((order) => (
                 <div
                   key={order.id}
                   className="rounded-xl bg-white p-4 shadow-md"
                 >
                   {/* CUSTOMER + STATUS */}
+
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-semibold text-slate-800">
@@ -582,6 +727,7 @@ const AdminOrders = () => {
                   </div>
 
                   {/* ORDER INFORMATION */}
+
                   <div className="mt-4 grid grid-cols-2 gap-4 border-t pt-4">
                     <div>
                       <p className="text-xs text-slate-500">Order Date</p>
@@ -601,6 +747,7 @@ const AdminOrders = () => {
                   </div>
 
                   {/* ORDER ID */}
+
                   <div className="mt-4 border-t pt-4">
                     <p className="text-xs text-slate-500">Order ID</p>
 
@@ -610,6 +757,7 @@ const AdminOrders = () => {
                   </div>
 
                   {/* PAYMENT */}
+
                   <div className="mt-4 flex items-center justify-between border-t pt-4">
                     <span className="text-sm text-slate-500">Payment</span>
 
@@ -623,6 +771,7 @@ const AdminOrders = () => {
                   </div>
 
                   {/* UPDATE STATUS */}
+
                   <div className="mt-4 border-t pt-4">
                     <p className="mb-2 text-sm font-medium text-slate-600">
                       Update Status
@@ -642,6 +791,9 @@ const AdminOrders = () => {
                       ))}
                     </select>
                   </div>
+
+                  {/* DELIVERY PARTNER */}
+
                   <div className="mt-4">
                     <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-400">
                       Delivery Partner
@@ -654,16 +806,16 @@ const AdminOrders = () => {
                         handleAssignPartner(order.id, e.target.value)
                       }
                       className="
-      w-full rounded-xl
-      border border-slate-200
-      bg-slate-50 px-3 py-3
-      text-sm font-medium text-slate-700
-      outline-none
-      focus:border-blue-500
-      focus:bg-white
-      focus:ring-2
-      focus:ring-blue-100
-    "
+                        w-full rounded-xl
+                        border border-slate-200
+                        bg-slate-50 px-3 py-3
+                        text-sm font-medium text-slate-700
+                        outline-none
+                        focus:border-blue-500
+                        focus:bg-white
+                        focus:ring-2
+                        focus:ring-blue-100
+                      "
                     >
                       <option value="">Select Delivery Partner</option>
 
@@ -677,11 +829,84 @@ const AdminOrders = () => {
                 </div>
               ))}
             </div>
+
+            {/* =================================================
+                PAGINATION
+            ================================================= */}
+
+            {pagination.totalPages > 1 && (
+              <div className="mt-6 flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-4 shadow-md sm:flex-row">
+                {/* SUMMARY */}
+
+                <p className="text-sm text-slate-500">
+                  Page{" "}
+                  <span className="font-semibold text-slate-800">
+                    {pagination.page}
+                  </span>{" "}
+                  of{" "}
+                  <span className="font-semibold text-slate-800">
+                    {pagination.totalPages}
+                  </span>
+                </p>
+
+                {/* BUTTONS */}
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={goToPreviousPage}
+                    disabled={page === 1 || loading}
+                    className="
+                      inline-flex items-center gap-1
+                      rounded-xl border border-slate-200
+                      bg-white px-4 py-2.5
+                      text-sm font-semibold text-slate-700
+                      transition
+                      hover:bg-slate-50
+                      disabled:cursor-not-allowed
+                      disabled:opacity-40
+                    "
+                  >
+                    <ChevronLeft size={17} />
+                    Previous
+                  </button>
+
+                  <span
+                    className="
+                      rounded-xl bg-[#0F274D]
+                      px-4 py-2.5
+                      text-sm font-bold text-white
+                    "
+                  >
+                    {page}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={goToNextPage}
+                    disabled={page === pagination.totalPages || loading}
+                    className="
+                      inline-flex items-center gap-1
+                      rounded-xl border border-slate-200
+                      bg-white px-4 py-2.5
+                      text-sm font-semibold text-slate-700
+                      transition
+                      hover:bg-slate-50
+                      disabled:cursor-not-allowed
+                      disabled:opacity-40
+                    "
+                  >
+                    Next
+                    <ChevronRight size={17} />
+                  </button>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>
     </div>
   );
-};
+};;
 
 export default AdminOrders;
