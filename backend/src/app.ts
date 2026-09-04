@@ -17,6 +17,8 @@ import partnerTrackingRoutes
   from "./routes/partnerTrackingRoutes.js";
 import geocodeRoutes from "./routes/geocode.routes.js";
 import quoteRequestRoutes from "./routes/quoteRequestRoutes.js";
+import productPaginationRoutes from "./routes/productPaginationRoutes.js";
+import productCategoriesRoutes from "./routes/productCategoriesRoutes.js";
 const app = express();
 
 //--------------------
@@ -56,6 +58,14 @@ app.use(
 app.use(
     "/api/products",
     productRoutes
+);
+app.use(
+  "/api/products-pagination",
+  productPaginationRoutes,
+);
+app.use(
+  "/api/products-pagination/categories",
+  productCategoriesRoutes,
 );
 app.use(
     "/api/cart",
