@@ -6,12 +6,13 @@ import {
   ShoppingCart,
   Clock,
   CircleCheck,
-  IndianRupee,
+  //IndianRupee,
   Plus,
   ListOrdered,
   BarChart3,
 } from "lucide-react";
 import api from "../../services/api";
+import NairaIcon from "../../components/Naira";
 
 interface Dashboard {
   total_products: string;
@@ -139,7 +140,8 @@ const AdminDashboard = () => {
     {
       title: "Total Sales",
       value: `₦${totalSales.toLocaleString("en-IN")}`,
-      icon: IndianRupee,
+      //icon: IndianRupee,
+      icon: NairaIcon,
       style: "bg-orange-100 text-orange-700",
       iconStyle: "bg-orange-50 text-orange-600",
     },

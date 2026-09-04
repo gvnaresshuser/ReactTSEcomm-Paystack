@@ -5,7 +5,7 @@ import {
   LoaderCircle,
   Package,
   FileText,
-  IndianRupee,
+  //IndianRupee,
   Boxes,
   Tag,
   Image,
@@ -14,7 +14,7 @@ import {
   Save,
   ArrowLeft,
 } from "lucide-react";
-
+import Naira from "../../components/Naira";
 interface FormData {
   name: string;
   description: string;
@@ -281,7 +281,8 @@ const AdminProductForm = () => {
             {/* PRICING & INVENTORY */}
             <section className="border-t border-slate-100 pt-7">
               <div className="mb-4 flex items-center gap-2">
-                <IndianRupee size={18} className="text-green-600" />
+                {/* <IndianRupee size={18} className="text-green-600" /> */}
+                <Naira size={18} className="text-green-600" />
 
                 <h3 className="font-bold text-slate-800">
                   Pricing & Inventory

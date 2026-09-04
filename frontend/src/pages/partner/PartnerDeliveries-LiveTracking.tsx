@@ -10,7 +10,6 @@ import {
   RefreshCw,
   CheckCircle,
   CreditCard,
-  
 } from "lucide-react";
 import Swal from "sweetalert2";
 import api from "../../services/api";
@@ -537,7 +536,7 @@ const PartnerDeliveries = () => {
                     </div>
 
                     <p className="mt-1 text-lg font-bold text-slate-800">
-                      ₹{Number(delivery.total_amount).toLocaleString("en-IN")}
+                      ₦{Number(delivery.total_amount).toLocaleString("en-IN")}
                     </p>
                   </div>
 

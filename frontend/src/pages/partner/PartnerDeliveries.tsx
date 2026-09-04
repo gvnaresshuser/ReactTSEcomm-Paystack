@@ -11,7 +11,6 @@ import {
   RefreshCw,
   CheckCircle,
   CreditCard,
-  
 } from "lucide-react";
 import Swal from "sweetalert2";
 import api from "../../services/api";
@@ -76,7 +75,7 @@ const PartnerDeliveries = () => {
   useEffect(() => {
     fetchDeliveries();
   }, []);
-/*   useEffect(() => {
+  /*   useEffect(() => {
     return () => {
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
@@ -121,7 +120,7 @@ const PartnerDeliveries = () => {
     });
   };
 
-/*   const stopLocationTracking = () => {
+  /*   const stopLocationTracking = () => {
     if (watchIdRef.current !== null) {
       navigator.geolocation.clearWatch(watchIdRef.current);
 
@@ -130,7 +129,7 @@ const PartnerDeliveries = () => {
       console.log("GPS tracking stopped.");
     }
   }; */
- /*  const startLocationTracking = (orderId: string) => {
+  /*  const startLocationTracking = (orderId: string) => {
     if (!navigator.geolocation) {
       Swal.fire({
         icon: "error",
@@ -246,7 +245,7 @@ const PartnerDeliveries = () => {
     }
   };
 
- /*  const handleStartDelivery = async (orderId: string) => {
+  /*  const handleStartDelivery = async (orderId: string) => {
     try {
       await api.put(`/api/partner/deliveries/${orderId}/start`);
 
@@ -577,7 +576,7 @@ const PartnerDeliveries = () => {
                     </div>
 
                     <p className="mt-1 text-lg font-bold text-slate-800">
-                      ₹{Number(delivery.total_amount).toLocaleString("en-IN")}
+                      ₦{Number(delivery.total_amount).toLocaleString("en-IN")}
                     </p>
                   </div>
 
@@ -734,7 +733,7 @@ const PartnerDeliveries = () => {
                   </button>
                 )}
 
-               {/*  {delivery.status === "OutForDelivery" && (
+                {/*  {delivery.status === "OutForDelivery" && (
                   <button
                     onClick={() => navigate(`/partner/tracking/${delivery.id}`)}
                     className="

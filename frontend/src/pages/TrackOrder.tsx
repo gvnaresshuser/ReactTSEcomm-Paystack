@@ -53,8 +53,7 @@ const TrackOrder = () => {
       try {
         const response = await api.get(`/api/orders/${id}`);
 
-        const updatedOrder: TrackingOrder =
-          response.data.order;
+        const updatedOrder: TrackingOrder = response.data.order;
 
         // --------------------------------------------------------
         // Detect actual database status change
@@ -86,8 +85,7 @@ const TrackOrder = () => {
           }
         }
 
-        previousStatusRef.current =
-          updatedOrder.status;
+        previousStatusRef.current = updatedOrder.status;
 
         setOrder(updatedOrder);
 
@@ -99,10 +97,7 @@ const TrackOrder = () => {
           clearInterval(interval);
         }
       } catch (error: any) {
-        console.error(
-          "Track order error:",
-          error,
-        );
+        console.error("Track order error:", error);
       } finally {
         setLoading(false);
       }
@@ -112,10 +107,7 @@ const TrackOrder = () => {
     fetchOrder();
 
     // Poll every 5 seconds
-    interval = setInterval(
-      fetchOrder,
-      5000,
-    );
+    interval = setInterval(fetchOrder, 5000);
 
     // Cleanup
     return () => {
@@ -141,16 +133,14 @@ const TrackOrder = () => {
     setAnimationStep(1);
 
     // Step 2 after 5 seconds
-    const preparedTimer =
-      setTimeout(() => {
-        setAnimationStep(2);
-      }, 5000);
+    const preparedTimer = setTimeout(() => {
+      setAnimationStep(2);
+    }, 5000);
 
     // Step 3 after 10 seconds
-    const deliveryTimer =
-      setTimeout(() => {
-        setAnimationStep(3);
-      }, 10000);
+    const deliveryTimer = setTimeout(() => {
+      setAnimationStep(3);
+    }, 10000);
 
     return () => {
       clearTimeout(preparedTimer);
@@ -177,9 +167,7 @@ const TrackOrder = () => {
   if (!order) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-12 text-center">
-        <h2 className="text-xl font-bold text-slate-800">
-          Order not found
-        </h2>
+        <h2 className="text-xl font-bold text-slate-800">Order not found</h2>
 
         <Link
           to="/orders"
@@ -192,8 +180,7 @@ const TrackOrder = () => {
     );
   }
 
-  const isDelivered =
-    order.status === "Delivered";
+  const isDelivered = order.status === "Delivered";
 
   // ============================================================
   // PAGE
@@ -214,15 +201,10 @@ const TrackOrder = () => {
           Back to Orders
         </Link>
 
-        <h1 className="text-3xl font-bold text-slate-900">
-          Track Your Order
-        </h1>
+        <h1 className="text-3xl font-bold text-slate-900">Track Your Order</h1>
 
         <p className="mt-1 text-sm text-slate-500">
-          Order #
-          {order.id
-            .slice(0, 8)
-            .toUpperCase()}
+          Order #{order.id.slice(0, 8).toUpperCase()}
         </p>
       </div>
 
@@ -256,20 +238,12 @@ const TrackOrder = () => {
               isDelivered
                 ? "bg-green-100 text-green-600"
                 : "bg-blue-50 text-blue-600"
-            } ${
-              statusChanged
-                ? "scale-110"
-                : ""
-            }`}
+            } ${statusChanged ? "scale-110" : ""}`}
           >
             {isDelivered ? (
               <Check
                 size={28}
-                className={
-                  statusChanged
-                    ? "animate-bounce"
-                    : ""
-                }
+                className={statusChanged ? "animate-bounce" : ""}
               />
             ) : (
               <Truck size={28} />
@@ -277,14 +251,10 @@ const TrackOrder = () => {
           </div>
 
           <div>
-            <p className="text-sm font-medium text-slate-500">
-              Current Status
-            </p>
+            <p className="text-sm font-medium text-slate-500">Current Status</p>
 
             <h2 className="text-xl font-bold text-slate-900">
-              {isDelivered
-                ? "Delivered"
-                : "Your order is on the way"}
+              {isDelivered ? "Delivered" : "Your order is on the way"}
             </h2>
           </div>
         </div>
@@ -334,10 +304,7 @@ const TrackOrder = () => {
 
           {/* Reaching You */}
 
-          <TimelineItem
-            title="Reaching You"
-            completed={isDelivered}
-          />
+          <TimelineItem title="Reaching You" completed={isDelivered} />
 
           {/* Delivered */}
 
@@ -417,25 +384,17 @@ const TrackOrder = () => {
       {isDelivered && (
         <div
           className={`mt-6 rounded-2xl border border-green-200 bg-green-50 p-6 text-center transition-all duration-700 ${
-            deliveredAnimation
-              ? "scale-[1.02] shadow-lg shadow-green-100"
-              : ""
+            deliveredAnimation ? "scale-[1.02] shadow-lg shadow-green-100" : ""
           }`}
         >
           <div
             className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600 transition-transform duration-700 ${
-              deliveredAnimation
-                ? "scale-125"
-                : ""
+              deliveredAnimation ? "scale-125" : ""
             }`}
           >
             <Check
               size={25}
-              className={
-                deliveredAnimation
-                  ? "animate-bounce"
-                  : ""
-              }
+              className={deliveredAnimation ? "animate-bounce" : ""}
             />
           </div>
 
@@ -455,21 +414,13 @@ const TrackOrder = () => {
 
       <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex items-center gap-3">
-          <Package
-            size={20}
-            className="text-slate-500"
-          />
+          <Package size={20} className="text-slate-500" />
 
           <div>
-            <p className="text-sm text-slate-500">
-              Order Total
-            </p>
+            <p className="text-sm text-slate-500">Order Total</p>
 
             <p className="font-bold text-slate-900">
-              ₹
-              {Number(
-                order.total_amount,
-              ).toLocaleString("en-IN")}
+              ₦{Number(order.total_amount).toLocaleString("en-IN")}
             </p>
           </div>
         </div>
@@ -497,11 +448,9 @@ const AnimatedTimelineItem = ({
   icon,
   message,
 }: AnimatedTimelineItemProps) => {
-  const visible =
-    animationStep >= step;
+  const visible = animationStep >= step;
 
-  const active =
-    animationStep === step;
+  const active = animationStep === step;
 
   return (
     <div className="relative flex min-h-[72px] gap-4">
@@ -510,9 +459,7 @@ const AnimatedTimelineItem = ({
       {step < 3 && (
         <div
           className={`absolute left-[15px] top-8 h-full w-0.5 transition-all duration-1000 ${
-            animationStep > step
-              ? "bg-blue-500"
-              : "bg-slate-200"
+            animationStep > step ? "bg-blue-500" : "bg-slate-200"
           }`}
         />
       )}
@@ -524,17 +471,11 @@ const AnimatedTimelineItem = ({
           visible
             ? "bg-blue-600 text-white"
             : "border-2 border-slate-200 bg-white text-slate-300"
-        } ${
-          active
-            ? "scale-125 shadow-lg shadow-blue-200"
-            : "scale-100"
-        }`}
+        } ${active ? "scale-125 shadow-lg shadow-blue-200" : "scale-100"}`}
       >
         {visible &&
           (active ? (
-            <span className="animate-pulse">
-              {icon}
-            </span>
+            <span className="animate-pulse">{icon}</span>
           ) : (
             <Check size={16} />
           ))}
@@ -544,25 +485,19 @@ const AnimatedTimelineItem = ({
 
       <div
         className={`pt-1 transition-all duration-1000 ${
-          visible
-            ? "translate-x-0 opacity-100"
-            : "translate-x-3 opacity-0"
+          visible ? "translate-x-0 opacity-100" : "translate-x-3 opacity-0"
         }`}
       >
         <p
           className={`text-sm font-semibold transition-colors duration-700 ${
-            active
-              ? "text-blue-700"
-              : "text-slate-900"
+            active ? "text-blue-700" : "text-slate-900"
           }`}
         >
           {title}
         </p>
 
         {active && (
-          <p className="mt-1 text-xs text-blue-600 animate-pulse">
-            {message}
-          </p>
+          <p className="mt-1 text-xs text-blue-600 animate-pulse">{message}</p>
         )}
       </div>
     </div>
@@ -595,9 +530,7 @@ const TimelineItem = ({
       {!last && (
         <div
           className={`absolute left-[15px] top-8 h-full w-0.5 transition-colors duration-700 ${
-            completed
-              ? "bg-blue-500"
-              : "bg-slate-200"
+            completed ? "bg-blue-500" : "bg-slate-200"
           }`}
         />
       )}
@@ -611,21 +544,10 @@ const TimelineItem = ({
             : active
               ? "border-4 border-blue-100 bg-blue-600 text-white animate-pulse"
               : "border-2 border-slate-200 bg-white text-slate-300"
-        } ${
-          celebration
-            ? "scale-150 shadow-xl shadow-green-200"
-            : ""
-        }`}
+        } ${celebration ? "scale-150 shadow-xl shadow-green-200" : ""}`}
       >
         {completed ? (
-          <Check
-            size={16}
-            className={
-              celebration
-                ? "animate-bounce"
-                : ""
-            }
-          />
+          <Check size={16} className={celebration ? "animate-bounce" : ""} />
         ) : active ? (
           <Truck size={14} />
         ) : null}
@@ -636,14 +558,8 @@ const TimelineItem = ({
       <div className="pt-1">
         <p
           className={`text-sm font-semibold transition-all duration-700 ${
-            completed || active
-              ? "text-slate-900"
-              : "text-slate-400"
-          } ${
-            celebration
-              ? "origin-left scale-105 text-green-700"
-              : ""
-          }`}
+            completed || active ? "text-slate-900" : "text-slate-400"
+          } ${celebration ? "origin-left scale-105 text-green-700" : ""}`}
         >
           {title}
         </p>
@@ -665,4 +581,3 @@ const TimelineItem = ({
 };
 
 export default TrackOrder;
-

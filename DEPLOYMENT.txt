@@ -582,6 +582,50 @@ E:\Jose\ReactTSEcomm-Paystack>
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
+Microsoft Windows [Version 10.0.26100.8246]
+(c) Microsoft Corporation. All rights reserved.
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npx tsc --noEmit
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npm run build
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.2.2 building client environment for production...
+✓ 2050 modules transformed.
+computing gzip size...
+dist/index.html                     0.53 kB │ gzip:   0.33 kB
+dist/assets/globe-MdQiTrTi.png    133.67 kB
+dist/assets/index-CBvIZTqr.css    111.07 kB │ gzip:  20.17 kB
+dist/assets/index-mCNLVr7N.js   1,009.34 kB │ gzip: 285.89 kB
+
+✓ built in 3.31s
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[PLUGIN_TIMINGS] Your build spent 62% of 3.3s inside plugin hooks (2.0s).
+Measured inside the callback, so queue time is excluded and time the callback itself awaited is not:
+  - @tailwindcss/vite:generate:build transform (32%, 1.0s, 4 calls)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>npm run dev
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v8.2.2  ready in 622 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+
+E:\Jose\ReactTSEcomm-Paystack\frontend>cd ..
 
 E:\Jose\ReactTSEcomm-Paystack>git add .
 
@@ -591,22 +635,39 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-        modified:   frontend/src/components/home/Navbar.tsx
+        modified:   DEPLOYMENT.txt
+        new file:   REACT-JS-TYPESCRIPT-NEONDB-ECOMM-APP-SCROLLING-PAGINATION-03-09-2026.zip
+        new file:   backend.zip
+        new file:   frontend.zip
+        modified:   frontend/src/components/home/Contact.tsx
 
 
-E:\Jose\ReactTSEcomm-Paystack>git commit -m "scrolling 03-09-2026"
-[main 0b26e07] scrolling 03-09-2026
- 1 file changed, 5 insertions(+), 12 deletions(-)
+E:\Jose\ReactTSEcomm-Paystack>git add .
+
+E:\Jose\ReactTSEcomm-Paystack>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   DEPLOYMENT.txt
+        modified:   frontend/src/components/home/Contact.tsx
+
+
+E:\Jose\ReactTSEcomm-Paystack>git commit -m "form centered"
+[main 019efe5] form centered
+ 2 files changed, 36 insertions(+), 2 deletions(-)
 
 E:\Jose\ReactTSEcomm-Paystack>git push
-Enumerating objects: 13, done.
-Counting objects: 100% (13/13), done.
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
 Delta compression using up to 8 threads
-Compressing objects: 100% (7/7), done.
-Writing objects: 100% (7/7), 577 bytes | 288.00 KiB/s, done.
-Total 7 (delta 6), reused 0 (delta 0), pack-reused 0
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 887 bytes | 110.00 KiB/s, done.
+Total 8 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
 To https://github.com/gvnaresshuser/ReactTSEcomm-Paystack.git
-   03e358b..0b26e07  main -> main
+   0b26e07..019efe5  main -> main
 
 E:\Jose\ReactTSEcomm-Paystack>
 
